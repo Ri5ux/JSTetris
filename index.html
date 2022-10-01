@@ -6,7 +6,15 @@
         <title> JS TETRIS</title>
         <script src="./js/Constants.js"></script>
         <script src="./js/Draw.js"></script>
+        <script src="./js/Canvas.js"></script>
         <script src="./js/Game.js"></script>
+        <style>
+            #canvas {
+                width: 800px;
+                height: 600px;
+                background: #000000;
+            }
+        </style>
     </head>
     <body>
         <h1>TETRIS, BITCH!</h1>
@@ -17,5 +25,22 @@
         <div id="green">some really neat shizzle</div>
         <div id="plurbe"> tetris bros music</div>
         <div id="bootycheek"> the other man's chan</div>
+        <canvas id="canvas"></canvas>
+        <script type="text/javascript">
+            var canvas = document.getElementById("canvas");
+            var tetris = new Game(canvas, onLoad, onLoadPre, onSave);
+
+            tetris.start();
+
+            function onLoadPre() {
+                
+            }
+            function onLoad() {
+                
+            }
+            function onSave() {
+                
+            }
+        </script>
     </body>
 </html>
