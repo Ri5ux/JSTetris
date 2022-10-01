@@ -3,12 +3,18 @@ h1
     color:rgb(0, 255, 123); 
     font-size:48; 
     font-family:monospace;
+    top:0;
+    left:50%;
+
 }
 h2 
 {
     color:aquamarine; 
     font-family:monospace; 
     font-size:36;
+    top:20%;
+    left:50%;
+    
 }
 body 
 {
@@ -18,4 +24,16 @@ body
 {
     color:darkgrey; 
     font-size:20;
+    left:0;
+    top:20%;
+
+}
+.boredom
+{
+    font-size:10px;
+    font-family:monospace;
+    color:black;
+    bottom:100%;
+    left:0;
+
 }
