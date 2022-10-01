@@ -1,0 +1,21 @@
+h1 
+{
+    color:rgb(0, 255, 123); 
+    font-size:48; 
+    font-family:monospace;
+}
+h2 
+{
+    color:aquamarine; 
+    font-family:monospace; 
+    font-size:36;
+}
+body 
+{
+    background-color:darkslategray;
+}
+.words 
+{
+    color:darkgrey; 
+    font-size:20;
+}
