@@ -51,32 +51,30 @@ body
     text-decoration:none;
     border:none;
     display:inline-block;
-    left:100%;
-    position:fixed;
-    left:850px;
+    position:absolute;
+    left:810px;
 }
 #blue 
 {
     background-color:rgb(73, 133, 133);
     padding: 20px 92px;
-    left:850px;
-    top:140px;
+    top:28px;
 }
 #green 
 {
     background-color:rgb(97, 177, 124);
-    top:220px;
+    top:128px;
     padding:20px 20px;
 }
 #plurbe
 {
     background-color:rgb(73, 133, 133);
     padding:20px 38px;
-    top:300px;
+    top:228px;
 }
 #bootycheek
 {
     background-color:rgb(97, 177, 124);
     padding:20px 80px;
-    top:380px;
+    top:328px;
 }
