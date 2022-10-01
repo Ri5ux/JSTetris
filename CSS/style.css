@@ -42,40 +42,41 @@ body
     position:absolute;
 
 }
-
+.buttons
+{
+    font-family:monospace;
+    text-align:center;
+    color:rgb(18, 86, 86);
+    font-size:20px;
+    text-decoration:none;
+    border:none;
+    display:inline-block;
+    left:100%;
+    position:fixed;
+    left:850px;
+}
 #blue 
 {
     background-color:rgb(73, 133, 133);
-    font-family:monospace;
-    font-size:20px;
-    color:black;
-    position:absolute;
-    top:40px;
+    padding: 20px 92px;
+    left:850px;
+    top:140px;
 }
 #green 
 {
-    background-color:rgb(97, 177, 124); 
-    font-family:monospace;
-    font-size:20px;
-    color:black;
-    position:absolute;
-    top:60px;
+    background-color:rgb(97, 177, 124);
+    top:220px;
+    padding:20px 20px;
 }
 #plurbe
 {
-    background-color:rgb(73, 133, 133); 
-    font-family:monospace;
-    font-size:20px;
-    color:black;
-    position:absolute;
-    top:80px;
+    background-color:rgb(73, 133, 133);
+    padding:20px 38px;
+    top:300px;
 }
 #bootycheek
 {
-    background-color:rgb(97, 177, 124); 
-    font-family:monospace;
-    font-size:20px;
-    color:black;
-    position:absolute;
-    top:100px;
+    background-color:rgb(97, 177, 124);
+    padding:20px 80px;
+    top:380px;
 }
