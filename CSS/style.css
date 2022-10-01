@@ -1,20 +1,22 @@
 h1 
 {
     color:rgb(0, 255, 123); 
-    font-size:48; 
+    font-size:100; 
     font-family:monospace;
-    top:0;
-    left:50%;
+    top:10px;
+    left:200;
+    position:absolute;
 
 }
 h2 
 {
     color:aquamarine; 
     font-family:monospace; 
-    font-size:36;
-    top:20%;
-    left:50%;
-    
+    font-size:50;
+    top:50px;
+    left:200;
+    position:absolute;
+
 }
 body 
 {
@@ -23,9 +25,11 @@ body
 .words 
 {
     color:darkgrey; 
-    font-size:20;
-    left:0;
-    top:20%;
+    font-size:36;
+    left:300;
+    top:100px;
+    font-family:monospace;
+    position:absolute;
 
 }
 .boredom
@@ -33,7 +37,8 @@ body
     font-size:10px;
     font-family:monospace;
     color:black;
-    bottom:100%;
+    top:1000px;
     left:0;
+    position:absolute;
 
 }
