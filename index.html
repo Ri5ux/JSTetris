@@ -10,8 +10,6 @@
         <script src="./js/Game.js"></script>
         <style>
             #canvas {
-                width: 800px;
-                height: 600px;
                 background: #000000;
             }
         </style>
@@ -42,7 +40,7 @@
             </button>
         </a>
 
-        <canvas id="canvas"></canvas>
+        <canvas id="canvas" width="810px" height="810px"></canvas>
         <script type="text/javascript">
             var canvas = document.getElementById("canvas");
             var tetris = new Game(canvas, onLoad, onLoadPre, onSave);

@@ -4,26 +4,45 @@ class Game {
         this.canvas = canvas;
         this.context = canvas.getContext('2d');
         this.canvasHandler = new Canvas(this.canvas, this);
-        this.draw = new Draw(this, this.canvas, this.context);
+        this.render = new Draw(this, this.canvas, this.context);
         this.onLoad = onLoad;
         this.onSave = onSave;
         this.onLoadPre = onLoadPre;
         this.ticks = 1;
+        this.partialTicks = 1;
+        this.pxInMM = 1;
+        this.cubeSize = 30;
+        this.dpi = window.devicePixelRatio;
+        this.adjustDPI();
     }
 
     start() {
         var game = this;
 
         setInterval(function() {
-            game.update(game);
+            game.update();
         }, 20);
     }
 
-    update(game) {
-        game.ticks++;
+    update() {
+        this.ticks++;
 
-        if (game.ticks % (20 * 5) == 0) {
-            console.log("Game loop test");
+        if (this.ticks % (20 * 1) == 0) {
         }
+
+        this.renderGame();
+    }
+
+    renderGame() {
+        this.partialTicks++;
+        this.render.drawGrid();
+        
+    }
+
+    adjustDPI() {
+        let h = +getComputedStyle(this.canvas).getPropertyValue("height").slice(0, -2);
+        let w = +getComputedStyle(this.canvas).getPropertyValue("width").slice(0, -2);
+        this.canvas.setAttribute('height', h * this.dpi);
+        this.canvas.setAttribute('width', w * this.dpi);
     }
 }

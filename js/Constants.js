@@ -1,4 +1,4 @@
-var ApplicationConstants = {
+var GameConstants = {
     border: {
         width: 1,
         color: '#1E6BFF',
@@ -8,6 +8,6 @@ var ApplicationConstants = {
     grid: {
         width: 1,
         color1: '#454545',
-        color2: '#232323'
+        color2: '#111111'
     }
 };

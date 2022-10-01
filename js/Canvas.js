@@ -19,12 +19,12 @@ class Canvas {
         if (this.dragging && this.isMouseInCanvas(event)) {
             let dX = (this.dragStartX - (coords.x)) * this.game.pxInMM;
             let dY = (this.dragStartY - (coords.y)) * this.game.pxInMM;
-            let nX = this.game.draw.canvasX - dX;
-            let nY = this.game.draw.canvasY - dY;
+            let nX = this.game.render.canvasX - dX;
+            let nY = this.game.render.canvasY - dY;
             this.dragStartX = coords.x;
             this.dragStartY = coords.y;
-            this.game.draw.canvasX = nX;
-            this.game.draw.canvasY = nY;
+            this.game.render.canvasX = nX;
+            this.game.render.canvasY = nY;
         }
     }
     onMouseDown(event) {
