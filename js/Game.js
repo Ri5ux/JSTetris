@@ -14,6 +14,9 @@ class Game {
         this.cubeSize = 30;
         this.dpi = window.devicePixelRatio;
         this.adjustDPI();
+
+        this.shapes = [];
+        this.activeShape = null;
     }
 
     start() {
@@ -27,16 +30,36 @@ class Game {
     update() {
         this.ticks++;
 
-        if (this.ticks % (20 * 1) == 0) {
+        if (this.ticks % (20 * 2) == 0) {
+            this.progressActiveShapeAtLevelSpeed();
+        }
+
+        if (this.ticks % (20 * 20) == 0) {
+            this.addShape(this.generateRandomShape().createObj(this));
         }
 
         this.renderGame();
     }
 
+    progressActiveShapeAtLevelSpeed() {
+        if (this.activeShape != null) {
+            this.activeShape.moveDown();
+            console.log("move shape down");
+        }
+    }
+
     renderGame() {
         this.partialTicks++;
+        this.clearCanvas();
+
+        this.shapes.forEach(function(shape) {
+            shape.draw();
+        });
         this.render.drawGrid();
-        
+    }
+
+    clearCanvas() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
     adjustDPI() {
@@ -45,4 +68,189 @@ class Game {
         this.canvas.setAttribute('height', h * this.dpi);
         this.canvas.setAttribute('width', w * this.dpi);
     }
+
+    getCanvasCenterH() {
+        return Math.floor(this.getCanvasCubeWidth() / 2);
+    }
+
+    getCanvasCubeWidth() {
+        return this.canvas.width / this.cubeSize;
+    }
+
+    getCanvasCubeHeight() {
+        return this.canvas.width / this.cubeSize;
+    }
+
+    addShape(shapeObj) {
+        this.activeShape = shapeObj;
+        shapeObj.setPos(this.getCanvasCenterH(), 2);
+        this.shapes.push(shapeObj);
+    }
+
+    generateRandomShape() {
+        return SHAPES[this.getRandomInt(SHAPES.length - 1)];
+    }
+
+    getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+    }
 }
+
+class ObjectHandler {
+    constructor(game) {
+        this.game = game;
+    }
+}
+
+class ShapeDefinition {
+    constructor(cubeDef) {
+        this.cubeDef = cubeDef;
+    }
+
+    createObj(game) {
+        let cubes = [];
+        this.cubeDef.forEach(function(cube) {
+            cubes.push(new Cube(cube.x, cube.y));
+        });
+        return new ShapeObj(game, cubes);
+    }
+}
+
+class ShapeObj {
+    constructor(game, cubes) {
+        this.game = game;
+        this.cubes = cubes;
+        this.x = 0;
+        this.y = 0;
+        this.set = false;
+    }
+
+    setPos(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    getX() {
+        return this.x;
+    }
+
+    getY() {
+        return this.y;
+    }
+
+    draw() {
+        var obj = this;
+
+        this.cubes.forEach(function(cube, index) {
+            cube.drawAt(obj.x, obj.y, obj.game);
+        });
+    }
+
+    move(x, y) {
+        this.cubes.forEach(function(cube, index) {
+            cube.move(x, y);
+        });
+    }
+
+    moveDown() {
+        if (!this.set) {
+            let nextX = this.getX();
+            let nextY = this.getY() + 1;
+
+            if (!this.willCollide(nextX, nextY)) {
+                this.setPos(nextX, nextY);
+            } else {
+                this.set = true;
+            }
+        }
+    }
+
+    willCollide(nX, nY) {
+
+
+
+        return false;
+    }
+}
+
+class Cube {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.color = "#00AAFF";
+    }
+
+    drawAt(gridX, gridY, game) {
+        game.render.drawCube(1 + gridX + this.getX(), gridY + this.getY(), 1, 1, this.color);
+    }
+
+    move(x, y) {
+        this.x = this.x + x;
+        this.y = this.y + y;
+    }
+
+    getX() {
+        return this.x;
+    }
+
+    getY() {
+        return this.y;
+    }
+
+    setPos(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+const SHAPE_TET_STRAIGHT = new ShapeDefinition([
+    new Cube(0, 0),
+    new Cube(0, 1),
+    new Cube(0, 2),
+    new Cube(0, 3)
+]);
+const SHAPE_TET_SQUARE = new ShapeDefinition([
+    new Cube(0, 0),
+    new Cube(0, 1),
+    new Cube(1, 1),
+    new Cube(1, 0)
+]);
+const SHAPE_TET_SKEWR = new ShapeDefinition([
+    new Cube(0, 0),
+    new Cube(1, 0),
+    new Cube(1, -1),
+    new Cube(2, -1)
+]);
+const SHAPE_TET_SKEWL = new ShapeDefinition([
+    new Cube(0, 0),
+    new Cube(1, 0),
+    new Cube(1, 1),
+    new Cube(2, 1)
+]);
+const SHAPE_TET_LR = new ShapeDefinition([
+    new Cube(0, 0),
+    new Cube(1, 0),
+    new Cube(0, 1),
+    new Cube(0, 2)
+]);
+const SHAPE_TET_LL = new ShapeDefinition([
+    new Cube(0, 0),
+    new Cube(-1, 0),
+    new Cube(0, 1),
+    new Cube(0, 2)
+]);
+const SHAPE_TET_T = new ShapeDefinition([
+    new Cube(0, 0),
+    new Cube(-1, 0),
+    new Cube(1, 0),
+    new Cube(0, -1)
+]);
+const SHAPES = [
+    SHAPE_TET_LL,
+    SHAPE_TET_LR,
+    SHAPE_TET_SKEWL,
+    SHAPE_TET_SKEWR,
+    SHAPE_TET_SQUARE,
+    SHAPE_TET_STRAIGHT,
+    SHAPE_TET_T
+];

@@ -46,11 +46,23 @@ class Draw {
         /* X Lines */
         for (let i = 0; i < bounds['width']; i += this.game.cubeSize) {
             let color = GameConstants['grid']['color2'];
+            let x = this.canvasX + (i + 0.5) * this.game.pxInMM;
+            let y = this.canvasY * this.game.pxInMM;
+            let x1 = this.canvasX + (i + 0.5) * this.game.pxInMM;
+            let y1 = this.canvasY + (bounds['height'] + 0.5) * this.game.pxInMM;
+
             this.context.strokeStyle = color;
             this.context.beginPath();
-            this.context.moveTo(this.canvasX + (i + 0.5) * this.game.pxInMM, this.canvasY * this.game.pxInMM);
-            this.context.lineTo(this.canvasX + (i + 0.5) * this.game.pxInMM, this.canvasY + (bounds['height'] + 0.5) * this.game.pxInMM);
+            this.context.moveTo(x, y);
+            this.context.lineTo(x1, y1);
             this.context.stroke();
+
+            if (i != 0) {
+                this.context.fillStyle = "#00CCFF";
+                this.context.font = '12px digital';
+                this.context.fillText(i / this.game.cubeSize, x + (this.game.cubeSize / 4), y + (this.game.cubeSize / 2) + 3);
+            }
+
             idx++
         };
 
@@ -59,12 +71,35 @@ class Draw {
         /* Y Lines */
         for (let i = 0; i < bounds['height']; i += this.game.cubeSize) {
             let color = GameConstants['grid']['color2'];
+            let x = this.canvasX + 0.5 * this.game.pxInMM;
+            let y = this.canvasY + (i + 0.5) * this.game.pxInMM;
+            let x1 = this.canvasX + (bounds['width'] + 0.5) * this.game.pxInMM;
+            let y1 = this.canvasY + (i + 0.5) * this.game.pxInMM;
+
             this.context.strokeStyle = color;
             this.context.beginPath();
-            this.context.moveTo(this.canvasX + 0.5 * this.game.pxInMM, this.canvasY + (i + 0.5) * this.game.pxInMM);
-            this.context.lineTo(this.canvasX + (bounds['width'] + 0.5) * this.game.pxInMM, this.canvasY + (i + 0.5) * this.game.pxInMM);
+            this.context.moveTo(x, y);
+            this.context.lineTo(x1, y1);
             this.context.stroke();
+            
+            this.context.fillStyle = "#00CCFF";
+            this.context.font = '12px digital';
+            this.context.fillText(i / this.game.cubeSize, x + (this.game.cubeSize / 4), y + (this.game.cubeSize / 2) + 3);
+
             idx++
         }
+    }
+
+    drawCube(x, y, w, h, color) {
+        let x1 = x * this.game.cubeSize;
+        let y1 = y * this.game.cubeSize;
+        let x2 = w * this.game.cubeSize;
+        let y2 = h * this.game.cubeSize;
+        let padding = 1;
+        
+        this.context.beginPath();
+        this.context.fillStyle = color;
+        this.context.rect(x1, y1, x2, y2);
+        this.context.fill();
     }
 }
