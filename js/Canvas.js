@@ -11,7 +11,32 @@ class Canvas {
         canvas.addEventListener('mousemove', this.onMouseMove.bind(this), false);
         canvas.addEventListener('touchmove', this.onMouseMove.bind(this), false);
         canvas.addEventListener('mouseup', this.onMouseUp.bind(this), false);
-        canvas.addEventListener('touchend', this.onMouseUp.bind(this), false)
+        canvas.addEventListener('touchend', this.onMouseUp.bind(this), false);
+
+        document.addEventListener('keydown', (event) => {
+            var name = event.key;
+            var code = event.code;
+
+            switch (code) {
+                case 'ArrowLeft':
+                    event.preventDefault();
+                    this.game.rotateActiveShapeCW();
+                    break;
+                case 'ArrowRight':
+                    event.preventDefault();
+                    this.game.rotateActiveShapeCCW();
+                    break;
+                case 'ArrowUp':
+                    event.preventDefault();
+                    break;
+                case 'ArrowDown':
+                    event.preventDefault();
+                    this.game.moveActiveShapeDown();
+                    break;
+            }
+
+            console.log(code);
+        }, false);
     }
     onMouseMove(event) {
         let coords = this.getMouseCoords(event);

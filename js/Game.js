@@ -30,7 +30,7 @@ class Game {
     update() {
         this.ticks++;
 
-        if (this.ticks % (20 * 2) == 0) {
+        if (this.ticks % (20 * 1) == 0) {
             this.progressActiveShapeAtLevelSpeed();
         }
 
@@ -42,9 +42,24 @@ class Game {
     }
 
     progressActiveShapeAtLevelSpeed() {
+        this.moveActiveShapeDown();
+    }
+
+    rotateActiveShapeCW() {
+        if (this.activeShape != null) {
+            this.activeShape.rotateCW();
+        }
+    }
+
+    rotateActiveShapeCCW() {
+        if (this.activeShape != null) {
+            this.activeShape.rotateCCW();
+        }
+    }
+
+    moveActiveShapeDown() {
         if (this.activeShape != null) {
             this.activeShape.moveDown();
-            console.log("move shape down");
         }
     }
 
@@ -138,6 +153,24 @@ class ShapeObj {
         return this.y;
     }
 
+    rotateCW() {
+        let oX = this.x;
+        let oY = this.y;
+
+        this.cubes.forEach(function(cube) {
+            cube.rotateCW(oX, oY);
+        });
+    }
+
+    rotateCCW() {
+        let oX = this.x;
+        let oY = this.y;
+        
+        this.cubes.forEach(function(cube) {
+            cube.rotateCCW(oX, oY);
+        });
+    }
+
     draw() {
         var obj = this;
 
@@ -187,6 +220,22 @@ class Cube {
     move(x, y) {
         this.x = this.x + x;
         this.y = this.y + y;
+    }
+
+    rotateCW(oX, oY) {
+        let point = rotatePoint(0, 0, this.x, this.y, 90);
+        let x = point[0];
+        let y = point[1];
+
+        this.setPos(x, y);
+    }
+
+    rotateCCW(oX, oY) {
+        let point = rotatePoint(0, 0, this.x, this.y, -90);
+        let x = point[0];
+        let y = point[1];
+
+        this.setPos(x, y);
     }
 
     getX() {
