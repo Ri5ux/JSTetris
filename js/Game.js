@@ -25,20 +25,29 @@ class Game {
         setInterval(function() {
             game.update();
         }, 20);
+        this.generateNewShape();
     }
 
     update() {
         this.ticks++;
 
-        if (this.ticks % (20 * 1) == 0) {
+        if (this.ticks % (20 * 1 / 2) == 0) {
             this.progressActiveShapeAtLevelSpeed();
+
+            if (this.activeShape == null) {
+                this.generateNewShape();
+            }
         }
 
         if (this.ticks % (20 * 20) == 0) {
-            this.addShape(this.generateRandomShape().createObj(this));
+            
         }
-
+        
         this.renderGame();
+    }
+
+    generateNewShape() {
+        this.addShape(this.generateRandomShape().createObj(this));
     }
 
     progressActiveShapeAtLevelSpeed() {
@@ -54,6 +63,18 @@ class Game {
     rotateActiveShapeCCW() {
         if (this.activeShape != null) {
             this.activeShape.rotateCCW();
+        }
+    }
+
+    moveActiveShapeLeft() {
+        if (this.activeShape != null) {
+            this.activeShape.moveLeft();
+        }
+    }
+
+    moveActiveShapeRight() {
+        if (this.activeShape != null) {
+            this.activeShape.moveRight();
         }
     }
 
@@ -137,7 +158,7 @@ class ShapeObj {
         this.cubes = cubes;
         this.x = 0;
         this.y = 0;
-        this.set = false;
+        this.frozen = false;
     }
 
     setPos(x, y) {
@@ -180,29 +201,46 @@ class ShapeObj {
     }
 
     move(x, y) {
-        this.cubes.forEach(function(cube, index) {
-            cube.move(x, y);
-        });
-    }
+        if (!this.frozen) {
+            let nextX = this.getX() + x;
+            let nextY = this.getY() + y;
 
-    moveDown() {
-        if (!this.set) {
-            let nextX = this.getX();
-            let nextY = this.getY() + 1;
-
-            if (!this.willCollide(nextX, nextY)) {
+            if (!this.checkCollision(nextX, nextY)) {
                 this.setPos(nextX, nextY);
             } else {
-                this.set = true;
+                this.freeze();
             }
         }
     }
 
-    willCollide(nX, nY) {
+    moveLeft() {
+        this.move(-1, 0);
+    }
 
+    moveRight() {
+        this.move(1, 0);
+    }
 
+    moveDown() {
+        this.move(0, 1);
+    }
+    
+    freeze() {
+        this.frozen = true;
+        this.game.activeShape = null;
+    }
 
-        return false;
+    checkCollision(nX, nY) {
+        var obj = this;
+        var collision = false;
+
+        this.cubes.forEach(function(cube, index) {
+            if (cube.checkFloorCollision(obj.game, obj)) {
+                collision = true;
+            }
+        });
+
+        return collision;
     }
 }
 
@@ -250,56 +288,15 @@ class Cube {
         this.x = x;
         this.y = y;
     }
-}
 
-const SHAPE_TET_STRAIGHT = new ShapeDefinition([
-    new Cube(0, 0),
-    new Cube(0, 1),
-    new Cube(0, 2),
-    new Cube(0, 3)
-]);
-const SHAPE_TET_SQUARE = new ShapeDefinition([
-    new Cube(0, 0),
-    new Cube(0, 1),
-    new Cube(1, 1),
-    new Cube(1, 0)
-]);
-const SHAPE_TET_SKEWR = new ShapeDefinition([
-    new Cube(0, 0),
-    new Cube(1, 0),
-    new Cube(1, -1),
-    new Cube(2, -1)
-]);
-const SHAPE_TET_SKEWL = new ShapeDefinition([
-    new Cube(0, 0),
-    new Cube(1, 0),
-    new Cube(1, 1),
-    new Cube(2, 1)
-]);
-const SHAPE_TET_LR = new ShapeDefinition([
-    new Cube(0, 0),
-    new Cube(1, 0),
-    new Cube(0, 1),
-    new Cube(0, 2)
-]);
-const SHAPE_TET_LL = new ShapeDefinition([
-    new Cube(0, 0),
-    new Cube(-1, 0),
-    new Cube(0, 1),
-    new Cube(0, 2)
-]);
-const SHAPE_TET_T = new ShapeDefinition([
-    new Cube(0, 0),
-    new Cube(-1, 0),
-    new Cube(1, 0),
-    new Cube(0, -1)
-]);
-const SHAPES = [
-    SHAPE_TET_LL,
-    SHAPE_TET_LR,
-    SHAPE_TET_SKEWL,
-    SHAPE_TET_SKEWR,
-    SHAPE_TET_SQUARE,
-    SHAPE_TET_STRAIGHT,
-    SHAPE_TET_T
-];
+    checkFloorCollision(game, shape) {
+        let floorHeight = game.getCanvasCubeHeight();
+        let cubeY = shape.y + this.y;
+
+        if (cubeY + 1 > floorHeight - 1) {
+            return true;
+        }
+
+        return false;
+    }
+}

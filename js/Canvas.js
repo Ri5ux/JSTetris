@@ -20,14 +20,15 @@ class Canvas {
             switch (code) {
                 case 'ArrowLeft':
                     event.preventDefault();
-                    this.game.rotateActiveShapeCW();
+                    this.game.moveActiveShapeLeft();
                     break;
                 case 'ArrowRight':
                     event.preventDefault();
-                    this.game.rotateActiveShapeCCW();
+                    this.game.moveActiveShapeRight();
                     break;
                 case 'ArrowUp':
                     event.preventDefault();
+                    this.game.rotateActiveShapeCW();
                     break;
                 case 'ArrowDown':
                     event.preventDefault();
