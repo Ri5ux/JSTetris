@@ -1,4 +1,4 @@
-class Canvas {
+class InputHandler {
     constructor(canvas, game) {
         this.canvas = canvas;
         this.game = game;
@@ -20,19 +20,19 @@ class Canvas {
             switch (code) {
                 case 'ArrowLeft':
                     event.preventDefault();
-                    this.game.moveActiveShapeLeft();
+                    this.game.activeShape.moveLeft();
                     break;
                 case 'ArrowRight':
                     event.preventDefault();
-                    this.game.moveActiveShapeRight();
+                    this.game.activeShape.moveRight();
                     break;
                 case 'ArrowUp':
                     event.preventDefault();
-                    this.game.rotateActiveShapeCW();
+                    this.game.activeShape.rotate(90);
                     break;
                 case 'ArrowDown':
                     event.preventDefault();
-                    this.game.moveActiveShapeDown();
+                    this.game.activeShape.moveDown();
                     break;
             }
 

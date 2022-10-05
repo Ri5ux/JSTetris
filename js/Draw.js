@@ -1,66 +1,71 @@
 class Draw {
-    constructor(game, canvas, render) {
+    constructor(game, canvas, ctx) {
         this.game = game;
         this.canvas = canvas;
-        this.context = render;
-
+        this.ctx = ctx;
         this.canvasX = 0;
         this.canvasY = 0;
     }
 
     drawBorderLine(vertexA, vertexB) {
-        this.context.beginPath();
-        this.context.moveTo(this.game.render.canvasX + vertexA.x * this.game.pxInMM, this.game.render.canvasY + vertexA.y * this.game.pxInMM);
-        this.context.lineTo(this.game.render.canvasX + vertexB.x * this.game.pxInMM, this.game.render.canvasY + vertexB.y * this.game.pxInMM);
-        this.context.lineWidth = GameConstants['border']['width'];
-        this.context.strokeStyle = GameConstants['border']['color'];
-        this.context.stroke();
+        this.ctx.beginPath();
+        this.ctx.moveTo(this.game.render.canvasX + vertexA.x * this.game.pxInMM, this.game.render.canvasY + vertexA.y * this.game.pxInMM);
+        this.ctx.lineTo(this.game.render.canvasX + vertexB.x * this.game.pxInMM, this.game.render.canvasY + vertexB.y * this.game.pxInMM);
+        this.ctx.lineWidth = GameConstants.border.width;
+        this.ctx.strokeStyle = GameConstants.border.color;
+        this.ctx.stroke();
 
         let x = this.game.render.canvasX + (vertexA.x + vertexB.x) / 2 * this.game.pxInMM;
         let y = this.game.render.canvasY + (vertexA.y + vertexB.y) / 2 * this.game.pxInMM;
         let cellsSeriese = 24;
         let cellsSeriesf = 16;
 
-        this.context.beginPath();
-        this.context.rect(x - cellsSeriese / 2 - 10, y - cellsSeriesf / 2 - 6, cellsSeriese + 20, cellsSeriesf + 8);
-        this.context.fillStyle = 'black';
-        this.context.fill();
+        this.ctx.beginPath();
+        this.ctx.rect(x - cellsSeriese / 2 - 10, y - cellsSeriesf / 2 - 6, cellsSeriese + 20, cellsSeriesf + 8);
+        this.ctx.fillStyle = 'black';
+        this.ctx.fill();
 
         let width = vertexA.x - vertexB.x;
         let height = vertexA.y - vertexB.y;
         let length = Math['sqrt'](width * width + height * height);
-        
-        this.context.font = GameConstants['border']['font'];
-        this.context.textAlign = 'center';
-        this.context.textBaseline = 'middle';
-        this.context.fillStyle = GameConstants['border']['fontcolor'];
-        this.context.fillText(('' + (Math['round'](length)) + ''), x, y);
+
+        this.ctx.font = GameConstants.border.font;
+        this.ctx.textAlign = 'center';
+        this.ctx.textBaseline = 'middle';
+        this.ctx.fillStyle = GameConstants.border.fontcolor;
+        this.ctx.fillText(('' + (Math['round'](length)) + ''), x, y);
+    }
+
+    drawString(font, color, x, y, str) {
+        this.ctx.fillStyle = color;
+        this.ctx.font = font;
+        this.ctx.fillText(str, x, y);
     }
 
     drawGrid() {
         let bounds = this.canvas.getBoundingClientRect();
-        this.context.lineWidth = 1;
+        this.ctx.lineWidth = 1;
 
         let idx = 0;
 
         /* X Lines */
         for (let i = 0; i < bounds['width']; i += this.game.cubeSize) {
-            let color = GameConstants['grid']['color2'];
+            let color = GameConstants.game.gridLines;
             let x = this.canvasX + (i + 0.5) * this.game.pxInMM;
             let y = this.canvasY * this.game.pxInMM;
             let x1 = this.canvasX + (i + 0.5) * this.game.pxInMM;
             let y1 = this.canvasY + (bounds['height'] + 0.5) * this.game.pxInMM;
 
-            this.context.strokeStyle = color;
-            this.context.beginPath();
-            this.context.moveTo(x, y);
-            this.context.lineTo(x1, y1);
-            this.context.stroke();
+            this.ctx.strokeStyle = color;
+            this.ctx.beginPath();
+            this.ctx.moveTo(x, y);
+            this.ctx.lineTo(x1, y1);
+            this.ctx.stroke();
 
             if (i != 0) {
-                this.context.fillStyle = "#00CCFF";
-                this.context.font = '12px digital';
-                this.context.fillText(i / this.game.cubeSize, x + (this.game.cubeSize / 4), y + (this.game.cubeSize / 2) + 3);
+                let xf = x + (this.game.cubeSize / 4);
+                let yf = y + (this.game.cubeSize / 2) + 3;
+                this.drawString(GameConstants.game.font, GameConstants.game.fontcolor, xf, yf, i / this.game.cubeSize);
             }
 
             idx++
@@ -70,36 +75,71 @@ class Draw {
 
         /* Y Lines */
         for (let i = 0; i < bounds['height']; i += this.game.cubeSize) {
-            let color = GameConstants['grid']['color2'];
+            let color = GameConstants.game.gridLines;
             let x = this.canvasX + 0.5 * this.game.pxInMM;
             let y = this.canvasY + (i + 0.5) * this.game.pxInMM;
             let x1 = this.canvasX + (bounds['width'] + 0.5) * this.game.pxInMM;
             let y1 = this.canvasY + (i + 0.5) * this.game.pxInMM;
 
-            this.context.strokeStyle = color;
-            this.context.beginPath();
-            this.context.moveTo(x, y);
-            this.context.lineTo(x1, y1);
-            this.context.stroke();
-            
-            this.context.fillStyle = "#00CCFF";
-            this.context.font = '12px digital';
-            this.context.fillText(i / this.game.cubeSize, x + (this.game.cubeSize / 4), y + (this.game.cubeSize / 2) + 3);
+            this.ctx.strokeStyle = color;
+            this.ctx.beginPath();
+            this.ctx.moveTo(x, y);
+            this.ctx.lineTo(x1, y1);
+            this.ctx.stroke();
+
+            let xf = x + (this.game.cubeSize / 4);
+            let yf = y + (this.game.cubeSize / 2) + 3;
+            this.drawString(GameConstants.game.font, GameConstants.game.fontcolor, xf, yf, i / this.game.cubeSize);
+
 
             idx++
         }
     }
 
     drawCube(x, y, w, h, color) {
-        let x1 = x * this.game.cubeSize;
-        let y1 = y * this.game.cubeSize;
-        let x2 = w * this.game.cubeSize;
-        let y2 = h * this.game.cubeSize;
         let padding = 1;
+        let radius = 4;
+        let x1 = x * this.game.cubeSize + 1;
+        let y1 = y * this.game.cubeSize + 1;
+        let w1 = w * this.game.cubeSize - 1;
+        let h1 = h * this.game.cubeSize - 1;
+        let x2 = x1 + (padding / 2);
+        let y2 = y1 + (padding / 2);
+        let w2 = w1 - padding;
+        let h2 = h1 - padding;
         
-        this.context.beginPath();
-        this.context.fillStyle = color;
-        this.context.rect(x1, y1, x2, y2);
-        this.context.fill();
+        this.ctx.fillStyle = color;
+        this.ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
+        this.ctx.lineWidth = padding;
+        this.drawRoundedRect(x1, y1, w1, h1, radius * 2, true, false);
+        this.drawRoundedRect(x2, y2, w2, h2, radius, false, true);
+    }
+
+    drawRoundedRect(x, y, w, h, radius = 5, fill = false, stroke = true) {
+        if (typeof radius === 'number') {
+            radius = { tl: radius, tr: radius, br: radius, bl: radius };
+        } else {
+            radius = { ...{ tl: 0, tr: 0, br: 0, bl: 0 }, ...radius };
+        }
+
+        this.ctx.beginPath();
+        this.ctx.moveTo(x + radius.tl, y);
+        this.ctx.lineTo(x + w - radius.tr, y);
+        this.ctx.quadraticCurveTo(x + w, y, x + w, y + radius.tr);
+        this.ctx.lineTo(x + w, y + h - radius.br);
+        this.ctx.quadraticCurveTo(x + w, y + h, x + w - radius.br, y + h);
+        this.ctx.lineTo(x + radius.bl, y + h);
+        this.ctx.quadraticCurveTo(x, y + h, x, y + h - radius.bl);
+        this.ctx.lineTo(x, y + radius.tl);
+        this.ctx.quadraticCurveTo(x, y, x + radius.tl, y);
+        this.ctx.closePath();
+
+        if (fill) {
+            this.ctx.fill();
+        }
+
+        if (stroke) {
+            this.ctx.stroke();
+        }
     }
 }

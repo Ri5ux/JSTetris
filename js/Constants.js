@@ -5,9 +5,11 @@ var GameConstants = {
         font: '14pt digital',
         fontcolor: 'white'
     },
-    grid: {
+    game: {
         width: 1,
-        color1: '#454545',
-        color2: '#111111'
+        gridLines: '#111111',
+        background: '#000000',
+        font: '12px digital',
+        fontcolor: "#00CCFF"
     }
 };

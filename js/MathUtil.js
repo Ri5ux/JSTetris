@@ -1,4 +1,6 @@
-
+/**
+ * Convert angle in degrees to radians.
+ */
 function toRadians(degrees) {
     return (Math.PI / 180) * degrees;
 }
@@ -21,4 +23,19 @@ function rotatePoint(cx, cy, x, y, angle) {
     var ny = (cos * (y - cy)) - (sin * (x - cx)) + cy;
     
     return [nx, ny];
+}
+
+function randomHexColor() {
+    let chars = '0123456789ABCDEF';
+    let color = '#';
+
+    for (var i = 0; i < 6; i++) {
+        color += chars[Math.floor(Math.random() * 16)];
+    }
+
+    return color;
+}
+
+function randomInteger(max) {
+    return Math.floor(Math.random() * max);
 }

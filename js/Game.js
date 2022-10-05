@@ -1,84 +1,53 @@
 
 class Game {
-    constructor(canvas, onLoad, onLoadPre, onSave) {
-        this.canvas = canvas;
-        this.context = canvas.getContext('2d');
-        this.canvasHandler = new Canvas(this.canvas, this);
+    constructor(name) {
+        this.name = name;
+        this.canvas = document.getElementById(this.name);
+        this.context = this.canvas.getContext('2d');
+        this.input = new InputHandler(this.canvas, this);
         this.render = new Draw(this, this.canvas, this.context);
-        this.onLoad = onLoad;
-        this.onSave = onSave;
-        this.onLoadPre = onLoadPre;
         this.ticks = 1;
         this.partialTicks = 1;
         this.pxInMM = 1;
         this.cubeSize = 30;
-        this.dpi = window.devicePixelRatio;
-        this.adjustDPI();
-
         this.shapes = [];
         this.activeShape = null;
+        this.dpi = window.devicePixelRatio;
+        this.adjustDPI();
+        this.init();
+    }
+
+    init() {
+        this.canvas.style.background = GameConstants.game.background;
     }
 
     start() {
         var game = this;
 
-        setInterval(function() {
+        setInterval(function () {
             game.update();
         }, 20);
-        this.generateNewShape();
     }
 
     update() {
         this.ticks++;
 
-        if (this.ticks % (20 * 1 / 2) == 0) {
-            this.progressActiveShapeAtLevelSpeed();
-
-            if (this.activeShape == null) {
-                this.generateNewShape();
-            }
+        if (this.ticks % ((20 * 1) / 4) == 0) {
+            this.updateLevel();
         }
 
         if (this.ticks % (20 * 20) == 0) {
-            
+
         }
-        
+
         this.renderGame();
     }
 
-    generateNewShape() {
-        this.addShape(this.generateRandomShape().createObj(this));
-    }
-
-    progressActiveShapeAtLevelSpeed() {
-        this.moveActiveShapeDown();
-    }
-
-    rotateActiveShapeCW() {
-        if (this.activeShape != null) {
-            this.activeShape.rotateCW();
+    updateLevel() {
+        if (this.activeShape == null) {
+            this.createNewShape();
         }
-    }
 
-    rotateActiveShapeCCW() {
-        if (this.activeShape != null) {
-            this.activeShape.rotateCCW();
-        }
-    }
-
-    moveActiveShapeLeft() {
-        if (this.activeShape != null) {
-            this.activeShape.moveLeft();
-        }
-    }
-
-    moveActiveShapeRight() {
-        if (this.activeShape != null) {
-            this.activeShape.moveRight();
-        }
-    }
-
-    moveActiveShapeDown() {
         if (this.activeShape != null) {
             this.activeShape.moveDown();
         }
@@ -88,7 +57,7 @@ class Game {
         this.partialTicks++;
         this.clearCanvas();
 
-        this.shapes.forEach(function(shape) {
+        this.shapes.forEach(function (shape) {
             shape.draw();
         });
         this.render.drawGrid();
@@ -123,42 +92,63 @@ class Game {
         this.shapes.push(shapeObj);
     }
 
-    generateRandomShape() {
-        return SHAPES[this.getRandomInt(SHAPES.length - 1)];
+    createNewShape() {
+        let type = SHAPES[randomInteger(SHAPES.length - 1)];
+        this.addShape(type.create(this));
     }
 
-    getRandomInt(max) {
-        return Math.floor(Math.random() * max);
-    }
-}
+    isFloorAt(y) {
+        if (y > this.getCanvasCubeHeight() - 1) {
+            return true;
+        }
 
-class ObjectHandler {
-    constructor(game) {
-        this.game = game;
-    }
-}
-
-class ShapeDefinition {
-    constructor(cubeDef) {
-        this.cubeDef = cubeDef;
+        return false;
     }
 
-    createObj(game) {
-        let cubes = [];
-        this.cubeDef.forEach(function(cube) {
-            cubes.push(new Cube(cube.x, cube.y));
+    isWallAt(x) {
+        if (x < 0 || x >= this.getCanvasCubeWidth() - 1) {
+            return true
+        }
+
+        return false;
+    }
+
+    isShapeAt(x, y) {
+        return this.getShapeAt(x, y) != null;
+    }
+
+    getShapeAt(x, y) {
+        let result = null;
+
+        this.shapes.forEach(function(shape) {
+            shape.cubes.forEach(function(cube) {
+                if (cube.getX() == x && cube.getY() == y) {
+                    result = shape;
+                }
+            });
         });
-        return new ShapeObj(game, cubes);
+
+        return result;
     }
 }
 
-class ShapeObj {
-    constructor(game, cubes) {
+class Shape {
+    constructor(game, definition) {
         this.game = game;
-        this.cubes = cubes;
         this.x = 0;
         this.y = 0;
+        this.cubes = [];
         this.frozen = false;
+        this.color =  randomHexColor();
+        this.initialize(definition);
+    }
+
+    initialize(definition) {
+        let shape = this;
+
+        definition.cubeOffsets.forEach(function (cube) {
+            shape.cubes.push(new Cube(shape, cube[0], cube[1]));
+        });
     }
 
     setPos(x, y) {
@@ -174,42 +164,89 @@ class ShapeObj {
         return this.y;
     }
 
-    rotateCW() {
-        let oX = this.x;
-        let oY = this.y;
-
-        this.cubes.forEach(function(cube) {
-            cube.rotateCW(oX, oY);
-        });
-    }
-
-    rotateCCW() {
-        let oX = this.x;
-        let oY = this.y;
-        
-        this.cubes.forEach(function(cube) {
-            cube.rotateCCW(oX, oY);
+    rotate(degrees) {
+        this.cubes.forEach(function (cube) {
+            cube.rotate(degrees);
         });
     }
 
     draw() {
-        var obj = this;
+        var shape = this;
 
-        this.cubes.forEach(function(cube, index) {
-            cube.drawAt(obj.x, obj.y, obj.game);
+        this.cubes.forEach(function (cube) {
+            shape.game.render.drawCube(1 + cube.getX(), cube.getY(), 1, 1, shape.color);
         });
     }
 
-    move(x, y) {
-        if (!this.frozen) {
-            let nextX = this.getX() + x;
-            let nextY = this.getY() + y;
+    getMin() {
+        let minX = 0;
+        let minY = 0;
 
-            if (!this.checkCollision(nextX, nextY)) {
-                this.setPos(nextX, nextY);
-            } else {
-                this.freeze();
+        this.cubes.forEach(function (cube) {
+            if (cube.getOffsetX() < minX) minX = cube.getOffsetX();
+            if (cube.getOffsetY() < minY) minY = cube.getOffsetY();
+        });
+
+        return { x: minX, y: minY };
+    }
+
+    getMax() {
+        let maxX = 0;
+        let maxY = 0;
+
+        this.cubes.forEach(function (cube) {
+            if (cube.getOffsetX() > maxX) maxX = cube.getOffsetX();
+            if (cube.getOffsetY() > maxY) maxY = cube.getOffsetY();
+        });
+
+        return { x: maxX, y: maxY };
+    }
+
+    getWidth() {
+        return this.getMin().x - this.getMax().x;
+    }
+
+    getHeight() {
+        return this.getMin().y - this.getMax().y;
+    }
+
+    move(moveX, moveY) {
+        if (!this.frozen) {
+            let shape = this;
+            let cancelMovement = false;
+            let nX = this.getX() + moveX;
+            let nY = this.getY() + moveY;
+
+            this.cubes.forEach(function(cube) {
+                let cX = cube.getX() + moveX;
+                let cY = cube.getY() + moveY;
+                let shapeAt = shape.game.getShapeAt(cX, cY);
+                let isShapeAtNext = shapeAt != null && shapeAt != shape;
+    
+                if (shape.game.isFloorAt(cY) || isShapeAtNext) {
+                    if (moveY != 0) {
+                        shape.freeze();
+                    }
+                    cancelMovement = true;
+                }
+    
+                if (moveX < 0) {
+                    if (shape.game.isWallAt(cX)) {
+                        cancelMovement = true;
+                    }
+                } else if (moveX > 0) {
+                    if (shape.game.isWallAt(cX)) {
+                        cancelMovement = true;
+                    }
+                }
+                
+            });
+
+            if (cancelMovement) {
+                return;
             }
+            
+            shape.setPos(nX, nY);
         }
     }
 
@@ -224,79 +261,46 @@ class ShapeObj {
     moveDown() {
         this.move(0, 1);
     }
-    
+
     freeze() {
         this.frozen = true;
         this.game.activeShape = null;
     }
-
-    checkCollision(nX, nY) {
-        var obj = this;
-        var collision = false;
-
-        this.cubes.forEach(function(cube, index) {
-            if (cube.checkFloorCollision(obj.game, obj)) {
-                collision = true;
-            }
-        });
-
-        return collision;
-    }
 }
 
 class Cube {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.color = "#00AAFF";
+    constructor(shape, offsetX, offsetY) {
+        this.shape = shape;
+        this.offsetX = offsetX;
+        this.offsetY = offsetY;
     }
 
-    drawAt(gridX, gridY, game) {
-        game.render.drawCube(1 + gridX + this.getX(), gridY + this.getY(), 1, 1, this.color);
-    }
-
-    move(x, y) {
-        this.x = this.x + x;
-        this.y = this.y + y;
-    }
-
-    rotateCW(oX, oY) {
-        let point = rotatePoint(0, 0, this.x, this.y, 90);
+    rotate(degrees) {
+        let point = rotatePoint(0, 0, this.offsetX, this.offsetY, degrees);
         let x = point[0];
         let y = point[1];
 
         this.setPos(x, y);
     }
 
-    rotateCCW(oX, oY) {
-        let point = rotatePoint(0, 0, this.x, this.y, -90);
-        let x = point[0];
-        let y = point[1];
+    getOffsetX() {
+        return this.offsetX;
+    }
 
-        this.setPos(x, y);
+    getOffsetY() {
+        return this.offsetY;
     }
 
     getX() {
-        return this.x;
+        return this.shape.getX() + this.getOffsetX();
     }
 
     getY() {
-        return this.y;
+        return this.shape.getY() + this.getOffsetY();
     }
 
     setPos(x, y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    checkFloorCollision(game, shape) {
-        let floorHeight = game.getCanvasCubeHeight();
-        let cubeY = shape.y + this.y;
-
-        if (cubeY + 1 > floorHeight - 1) {
-            return true;
-        }
-
-        return false;
+        this.offsetX = x;
+        this.offsetY = y;
     }
 }
