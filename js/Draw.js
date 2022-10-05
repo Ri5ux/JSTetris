@@ -98,7 +98,7 @@ class Draw {
 
     drawCube(x, y, w, h, color) {
         let padding = 1;
-        let radius = 4;
+        let radius = 0;
         let x1 = x * this.game.cubeSize + 1;
         let y1 = y * this.game.cubeSize + 1;
         let w1 = w * this.game.cubeSize - 1;
