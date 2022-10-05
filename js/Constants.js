@@ -10,6 +10,6 @@ var GameConstants = {
         gridLines: '#111111',
         background: '#000000',
         font: '12px digital',
-        fontcolor: "#00CCFF"
+        fontcolor: "rgba(255, 255, 255, 0.2)"
     }
 };

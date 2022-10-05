@@ -21,8 +21,8 @@ function rotatePoint(cx, cy, x, y, angle) {
     var sin = Math.sin(radians);
     var nx = (cos * (x - cx)) + (sin * (y - cy)) + cx;
     var ny = (cos * (y - cy)) - (sin * (x - cx)) + cy;
-    
-    return [nx, ny];
+
+    return { x: Math.round(nx), y: Math.round(ny) };
 }
 
 function randomHexColor() {
@@ -38,4 +38,13 @@ function randomHexColor() {
 
 function randomInteger(max) {
     return Math.floor(Math.random() * max);
+}
+
+function sleep(ms) {
+    const date = Date.now();
+    let currentDate = null;
+
+    do {
+        currentDate = Date.now();
+    } while (currentDate - date < ms);
 }

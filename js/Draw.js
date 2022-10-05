@@ -115,6 +115,18 @@ class Draw {
         this.drawRoundedRect(x2, y2, w2, h2, radius, false, true);
     }
 
+    drawCollisionDebug(x, y) {
+        if (this.game.debugCollisions) {
+            this.drawCube(1 + x, y, 1, 1, "rgba(255, 0, 0, 0.4)");
+        }
+    }
+
+    drawCollisionDebugPreCheck(x, y) {
+        if (this.game.debugCollisions) {
+            this.drawCube(1 + x, y, 1, 1, "rgba(0, 0, 255, 0.4)");
+        }
+    }
+
     drawRoundedRect(x, y, w, h, radius = 5, fill = false, stroke = true) {
         if (typeof radius === 'number') {
             radius = { tl: radius, tr: radius, br: radius, bl: radius };

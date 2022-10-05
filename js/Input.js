@@ -20,19 +20,27 @@ class InputHandler {
             switch (code) {
                 case 'ArrowLeft':
                     event.preventDefault();
-                    this.game.activeShape.moveLeft();
+                    if (this.game.activeShape != null) {
+                        this.game.activeShape.moveLeft();
+                    }
                     break;
                 case 'ArrowRight':
                     event.preventDefault();
-                    this.game.activeShape.moveRight();
+                    if (this.game.activeShape != null) {
+                        this.game.activeShape.moveRight();
+                    }
                     break;
                 case 'ArrowUp':
                     event.preventDefault();
-                    this.game.activeShape.rotate(90);
+                    if (this.game.activeShape != null) {
+                        this.game.activeShape.rotate(90);
+                    }
                     break;
                 case 'ArrowDown':
                     event.preventDefault();
-                    this.game.activeShape.moveDown();
+                    if (this.game.activeShape != null) {
+                        this.game.activeShape.moveDown();
+                    }
                     break;
             }
 

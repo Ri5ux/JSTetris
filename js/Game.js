@@ -11,6 +11,8 @@ class Game {
         this.pxInMM = 1;
         this.cubeSize = 30;
         this.shapes = [];
+        this.debugCollisions = false;
+        this.collisions = [];
         this.activeShape = null;
         this.dpi = window.devicePixelRatio;
         this.adjustDPI();
@@ -32,7 +34,7 @@ class Game {
     update() {
         this.ticks++;
 
-        if (this.ticks % ((20 * 1) / 4) == 0) {
+        if (this.ticks % ((20 * 1)) == 0) {
             this.updateLevel();
         }
 
@@ -106,7 +108,7 @@ class Game {
     }
 
     isWallAt(x) {
-        if (x < 0 || x >= this.getCanvasCubeWidth() - 1) {
+        if (x < 0 || x >= this.getCanvasCubeWidth() - 2) {
             return true
         }
 
@@ -164,17 +166,39 @@ class Shape {
         return this.y;
     }
 
-    rotate(degrees) {
+    /** Doesnt prevent you from fully rotating shapes into other shapes */
+    tryRotate(degrees) {
+        let result = true;
+
         this.cubes.forEach(function (cube) {
-            cube.rotate(degrees);
+            let point = cube.getPointAfterRotation(degrees);
+            let collision = cube.checkCollisionAt(cube.shape.getX() + point.x, cube.shape.getY() + point.y);
+
+            if (collision) {
+                result = false;
+            }
         });
+
+        return result;
+    }
+
+    rotate(degrees) {
+        if (this.tryRotate(degrees)) {
+            this.cubes.forEach(function (cube) {
+                cube.rotate(degrees);
+            });
+        }
     }
 
     draw() {
         var shape = this;
 
         this.cubes.forEach(function (cube) {
-            shape.game.render.drawCube(1 + cube.getX(), cube.getY(), 1, 1, shape.color);
+            shape.game.render.drawCube(1 + cube.getX(), cube.getY(), 1, 1, shape.game.debugCollisions ? "rgba(0, 0, 0, 0)" : shape.color);
+        });
+
+        shape.game.collisions.forEach(function(collision) {
+            shape.game.render.drawCube(1 + collision[0] - 0.2, 1 + collision[1] - 0.2, 1 + 0.2, 1 + 0.2, "rgba(255, 0, 0, 0.4)");
         });
     }
 
@@ -210,43 +234,43 @@ class Shape {
         return this.getMin().y - this.getMax().y;
     }
 
+    checkCollisionAt(x, y) {
+        let collision = false;
+        let shape = this;
+
+        this.cubes.forEach(function(cube) {
+            let cX = x + cube.getOffsetX();
+            let cY = y + cube.getOffsetY();
+
+            if (shape.game.debugCollisions) {
+                console.log(cX + ", " + cY);
+                shape.game.render.drawCollisionDebugPreCheck(cX, cY);
+            }
+
+            if (cube.checkCollisionAt(x, y)) {
+                collision = true;
+            }
+        });
+
+        return collision;
+    }
+
     move(moveX, moveY) {
         if (!this.frozen) {
             let shape = this;
-            let cancelMovement = false;
             let nX = this.getX() + moveX;
             let nY = this.getY() + moveY;
+            let isVerticalMovement = moveY != 0;
+            let collision = this.checkCollisionAt(nX, nY);
 
-            this.cubes.forEach(function(cube) {
-                let cX = cube.getX() + moveX;
-                let cY = cube.getY() + moveY;
-                let shapeAt = shape.game.getShapeAt(cX, cY);
-                let isShapeAtNext = shapeAt != null && shapeAt != shape;
-    
-                if (shape.game.isFloorAt(cY) || isShapeAtNext) {
-                    if (moveY != 0) {
-                        shape.freeze();
-                    }
-                    cancelMovement = true;
-                }
-    
-                if (moveX < 0) {
-                    if (shape.game.isWallAt(cX)) {
-                        cancelMovement = true;
-                    }
-                } else if (moveX > 0) {
-                    if (shape.game.isWallAt(cX)) {
-                        cancelMovement = true;
-                    }
-                }
-                
-            });
+            if (isVerticalMovement && collision) {
+                shape.freeze();
+            }
 
-            if (cancelMovement) {
-                return;
+            if (!collision) {
+                shape.setPos(nX, nY);
             }
             
-            shape.setPos(nX, nY);
         }
     }
 
@@ -275,12 +299,13 @@ class Cube {
         this.offsetY = offsetY;
     }
 
-    rotate(degrees) {
-        let point = rotatePoint(0, 0, this.offsetX, this.offsetY, degrees);
-        let x = point[0];
-        let y = point[1];
+    getPointAfterRotation(degrees) {
+        return rotatePoint(0, 0, this.offsetX, this.offsetY, degrees);
+    }
 
-        this.setPos(x, y);
+    rotate(degrees) {
+        let point = this.getPointAfterRotation(degrees);
+        this.setPos(point.x, point.y);
     }
 
     getOffsetX() {
@@ -302,5 +327,37 @@ class Cube {
     setPos(x, y) {
         this.offsetX = x;
         this.offsetY = y;
+    }
+
+    checkCollisionAt(x, y) {
+        let cX = x + this.getOffsetX();
+        let cY = y + this.getOffsetY();
+        let shapeAt = this.shape.game.getShapeAt(cX, cY);
+
+        if (shapeAt != null && shapeAt != this.shape) {
+            if (this.shape.game.debugCollisions) {
+                console.log("collision.shape");
+                this.shape.game.render.drawCollisionDebug(cX, cY);
+            }
+            return true;
+        }
+
+        if (this.shape.game.isFloorAt(cY)) {
+            if (this.shape.game.debugCollisions) {
+                console.log("collision.floor");
+                this.shape.game.render.drawCollisionDebug(cX, cY);
+            }
+            return true;
+        }
+
+        if (this.shape.game.isWallAt(cX)) {
+            if (this.shape.game.debugCollisions) {
+                console.log("collision.wall");
+                this.shape.game.render.drawCollisionDebug(cX, cY);
+            }
+            return true;
+        }
+
+        return false;
     }
 }
