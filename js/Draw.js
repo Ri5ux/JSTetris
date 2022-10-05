@@ -76,10 +76,10 @@ class Draw {
         /* Y Lines */
         for (let i = 0; i < bounds['height']; i += this.game.cubeSize) {
             let color = GameConstants.game.gridLines;
-            let x = this.canvasX + 0.5 * this.game.pxInMM;
-            let y = this.canvasY + (i + 0.5) * this.game.pxInMM;
-            let x1 = this.canvasX + (bounds['width'] + 0.5) * this.game.pxInMM;
-            let y1 = this.canvasY + (i + 0.5) * this.game.pxInMM;
+            let x = this.canvasX + 0.5;
+            let y = this.canvasY + (i + 0.5);
+            let x1 = this.canvasX + (bounds['width'] + 0.5);
+            let y1 = this.canvasY + (i + 0.5);
 
             this.ctx.strokeStyle = color;
             this.ctx.beginPath();
@@ -88,8 +88,10 @@ class Draw {
             this.ctx.stroke();
 
             let xf = x + (this.game.cubeSize / 4);
-            let yf = y + (this.game.cubeSize / 2) + 3;
-            this.drawString(GameConstants.game.font, GameConstants.game.fontcolor, xf, yf, i / this.game.cubeSize);
+            let yf = y + (this.game.cubeSize / 2);
+            this.drawCube(0, i / this.game.cubeSize, 1, 1, GameConstants.game.wallColor);
+            this.drawCube(this.game.getCanvasCubeWidth() - 1, i / this.game.cubeSize, 1, 1, GameConstants.game.wallColor);
+            this.drawString(GameConstants.game.font, GameConstants.game.fontcolor, xf, yf + 3, i / this.game.cubeSize);
 
 
             idx++

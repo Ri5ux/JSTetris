@@ -9,7 +9,7 @@ class Game {
         this.ticks = 1;
         this.partialTicks = 1;
         this.pxInMM = 1;
-        this.cubeSize = 30;
+        this.cubeSize = 40;
         this.shapes = [];
         this.debugCollisions = false;
         this.collisions = [];
@@ -81,11 +81,11 @@ class Game {
     }
 
     getCanvasCubeWidth() {
-        return this.canvas.width / this.cubeSize;
+        return Math.floor(this.canvas.width / this.cubeSize);
     }
 
     getCanvasCubeHeight() {
-        return this.canvas.width / this.cubeSize;
+        return Math.floor(this.canvas.width / this.cubeSize);
     }
 
     addShape(shapeObj) {

@@ -51,8 +51,8 @@ class InputHandler {
         let coords = this.getMouseCoords(event);
 
         if (this.dragging && this.isMouseInCanvas(event)) {
-            let dX = (this.dragStartX - (coords.x)) * this.game.pxInMM;
-            let dY = (this.dragStartY - (coords.y)) * this.game.pxInMM;
+            let dX = (this.dragStartX - (coords.x));
+            let dY = (this.dragStartY - (coords.y));
             let nX = this.game.render.canvasX - dX;
             let nY = this.game.render.canvasY - dY;
             this.dragStartX = coords.x;
@@ -63,7 +63,7 @@ class InputHandler {
     }
     onMouseDown(event) {
         let coords = this.getMouseCoords(event);
-        this.dragging = true;
+        //this.dragging = true;
         this.dragStartX = coords.x;
         this.dragStartY = coords.y;
         console.log("mouse down");
@@ -86,8 +86,8 @@ class InputHandler {
         let mouseX = event.clientX - canvasSize.left;
         let mouseY = event.clientY - canvasSize.top;
 
-        mouseX = mouseX / this.game.pxInMM;
-        mouseY = mouseY / this.game.pxInMM;
+        mouseX = mouseX;
+        mouseY = mouseY;
 
         return {
             x: mouseX,
