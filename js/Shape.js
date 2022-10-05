@@ -87,11 +87,11 @@ class Shape {
     }
 
     getWidth() {
-        return this.getMin().x - this.getMax().x;
+        return Math.abs(this.getMin().x - this.getMax().x);
     }
 
     getHeight() {
-        return this.getMin().y - this.getMax().y;
+        return Math.abs(this.getMin().y - this.getMax().y);
     }
 
     checkCollisionAt(x, y) {

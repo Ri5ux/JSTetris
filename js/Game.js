@@ -88,7 +88,7 @@ class Game {
 
     addShape(shapeObj) {
         this.activeShape = shapeObj;
-        shapeObj.setPos(this.getCanvasCenterH(), 2);
+        shapeObj.setPos(this.getCanvasCenterH(), -shapeObj.getHeight());
         this.shapes.push(shapeObj);
     }
 
