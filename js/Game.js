@@ -6,11 +6,11 @@ class Game {
         this.input = new InputHandler(this.canvas, this);
         this.render = new Draw(this, this.canvas, this.context);
         this.sounds = new Sounds(this);
-        this.stats = new Statistics(this);
     }
 
     init() {
         this.canvas.style.background = GameConstants.game.background;
+        this.stats = new Statistics(this);
         this.ticks = 1;
         this.partialTicks = 1;
         this.pxInMM = 1;
