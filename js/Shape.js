@@ -165,5 +165,6 @@ class Shape {
     freeze() {
         this.frozen = true;
         this.game.activeShape = null;
+        this.game.sounds.FX_FREEZE.play();
     }
 }

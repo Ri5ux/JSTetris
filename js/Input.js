@@ -43,18 +43,21 @@ class InputHandler {
                         event.preventDefault();
                         if (this.game.activeShape != null) {
                             this.game.activeShape.moveLeft();
+                            this.game.sounds.FX_MOVE.play();
                         }
                         break;
                     case 'ArrowRight':
                         event.preventDefault();
                         if (this.game.activeShape != null) {
                             this.game.activeShape.moveRight();
+                            this.game.sounds.FX_MOVE.play();
                         }
                         break;
                     case 'ArrowUp':
                         event.preventDefault();
                         if (this.game.activeShape != null) {
                             this.game.activeShape.rotate(90);
+                            this.game.sounds.FX_ROTATE.play();
                         }
                         break;
                     case 'ArrowDown':

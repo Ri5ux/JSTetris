@@ -40,17 +40,18 @@ function randomInteger(max) {
     return Math.floor(Math.random() * max);
 }
 
-function sleep(ms) {
-    const date = Date.now();
-    let currentDate = null;
+function sleep(milliseconds) {
+    var start = new Date().getTime();
 
-    do {
-        currentDate = Date.now();
-    } while (currentDate - date < ms);
+    for (var i = 0; i < 1e7; i++) {
+        if ((new Date().getTime() - start) > milliseconds) {
+            break;
+        }
+    }
 }
 
 function arrayRemove(array, object) {
-    return array.filter(function(obj) {
+    return array.filter(function (obj) {
         return obj != object;
-    }); 
+    });
 }

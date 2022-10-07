@@ -5,6 +5,7 @@ class Game {
         this.context = this.canvas.getContext('2d');
         this.input = new InputHandler(this.canvas, this);
         this.render = new Draw(this, this.canvas, this.context);
+        this.sounds = new Sounds(this);
         this.stats = new Statistics(this);
         this.ticks = 1;
         this.partialTicks = 1;
@@ -14,6 +15,8 @@ class Game {
         this.level = 0;
         this.softDrop = 0;
         this.pause = false;
+        this.gameOver = false;
+        this.lineToClear = 0;
         this.shapes = [];
         this.debugCollisions = false;
         this.activeShape = null;
@@ -43,16 +46,26 @@ class Game {
         if (this.ticks % Math.round(40 * (1.0 - this.levelSpeed)) == 0) {
             this.updateLevel();
         }
+
+        if (this.gameOver) {
+            this.gameClear();
+        }
     }
 
     updateLevel() {
-        if (this.activeShape == null) {
-            this.createNewShape();
-            this.scanForCompleteLines();
-        }
+        if (!this.gameOver) {
+            if (this.activeShape == null) {
+                if (!this.isShapeAt(this.getCanvasCenterH(), 0)) {
+                    this.createNewShape();
+                    this.scanForCompleteLines();
+                } else {
+                    this.gameEnd();
+                }
+            }
 
-        if (this.activeShape != null) {
-            this.activeShape.moveDown();
+            if (this.activeShape != null) {
+                this.activeShape.moveDown();
+            }
         }
     }
 
@@ -95,8 +108,13 @@ class Game {
 
     addShape(shapeObj) {
         this.activeShape = shapeObj;
-        shapeObj.setPos(this.getCanvasCenterH(), -shapeObj.getHeight());
-        this.shapes.push(shapeObj);
+        let x = this.getCanvasCenterH();
+        let y = -shapeObj.getHeight();
+
+        if (!this.isShapeAt(x, y)) {
+            shapeObj.setPos(x, y);
+            this.shapes.push(shapeObj);
+        }
     }
 
     createNewShape() {
@@ -196,5 +214,45 @@ class Game {
         });
 
         this.stats.addScoreLineCompletion(completeLines.length);
+    }
+
+    gameEnd() {
+        this.gameOver = true;
+        this.sounds.FX_END_LEVEL.play();
+        this.lineToClear = 0;
+    }
+
+    getCubesAtLevel(level) {
+        var game = this;
+        var bounds = this.getLevelBounds();
+        var cubes = [];
+
+        for(var y = bounds.minY; y <= bounds.maxY; y++) {
+            for(var x = bounds.minX; x <= bounds.maxX; x++) {
+                var shape = game.getShapeAt(x, y);
+        
+                if (shape != null) {
+                    shape.cubes.forEach(function(cube) {
+                        if (cube.getY() == y && cube.getY() == level) {
+                            cubes.push(cube);
+                        }
+                    });
+                }
+            }
+        }
+
+        return cubes;
+    }
+
+    gameClear() {
+        if (this.ticks % 2 == 0 && this.lineToClear <= this.getCanvasCubeHeight()) {
+            var cubes = this.getCubesAtLevel(this.lineToClear)
+
+            cubes.forEach(function(cube) {
+                var shape = cube.shape;
+                shape.cubes = arrayRemove(shape.cubes, cube);
+            });
+            this.lineToClear++;
+        }
     }
 }
