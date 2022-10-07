@@ -87,4 +87,13 @@ body
 }
 #Score {
     padding: 10px 20px;
+    width: fit-content;
+    max-width: fit-content;
+    float: right;
+}
+#Lines {
+    padding: 10px 20px;
+    width: fit-content;
+    max-width: fit-content;
+    display: inline-block;
 }

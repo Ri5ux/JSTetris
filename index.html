@@ -40,7 +40,7 @@
             </button>
         </a>
 
-        <div id="ScoreWrapper"><div id="Score"></div></div>
+        <div id="ScoreWrapper"><div id="Lines"></div><div id="Score"></div></div>
 
         <canvas id="Tetris" width="401px" height="801px"></canvas>
         <script type="text/javascript">
@@ -48,10 +48,14 @@
             tetris.start();
 
             var score = document.getElementById("Score");
+            var lines = document.getElementById("Lines");
 
             setInterval(function() {
                 if (parseInt(score.innerHTML) != tetris.score) {
                     score.innerHTML = tetris.score;
+                }
+                if (parseInt(lines.innerHTML) != tetris.lines) {
+                    lines.innerHTML = tetris.lines;
                 }
             }, 20);
         </script>
