@@ -78,3 +78,13 @@ body
     padding:20px 80px;
     top:328px;
 }
+
+#ScoreWrapper {
+    background: #000000;
+    font-family: digital, system-ui;
+    font-size: 28px;
+    width: 401px;
+}
+#Score {
+    padding: 10px 20px;
+}

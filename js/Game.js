@@ -10,6 +10,7 @@ class Game {
         this.pxInMM = 1;
         this.cubeSize = 40;
         this.levelSpeed = 0.1; /* Range between 0.1 and 0.95 - Do not exceed 0.95 */
+        this.score = 0;
         this.shapes = [];
         this.debugCollisions = false;
         this.activeShape = null;
@@ -185,5 +186,28 @@ class Game {
             }
             game.shiftAllDownAbove(y);
         });
+
+        this.addScoreLineCompletion(completeLines.length);
+    }
+
+    addScore(points) {
+        this.score = this.score + points;
+    }
+
+    addScoreLineCompletion(count) {
+        switch(count) {
+            case 1:
+                this.addScore(40);
+                break;
+            case 2:
+                this.addScore(100);
+                break;
+            case 3:
+                this.addScore(300);
+                break;
+            case 4:
+                this.addScore(1200);
+                break;
+        }
     }
 }
