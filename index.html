@@ -24,11 +24,11 @@
 
         <div id="ContentContainer">
             <div id="GameWrapper">
-                <canvas id="Tetris" width="401px" height="801px"></canvas><!--
-                --><div id="Scoreboard">
+                <canvas id="Tetris" width="401px" height="801px"></canvas>
+                <div id="Scoreboard">
                     <div id="TitleWrapper" class="scoreboardBlock">
-                    <div id="Title"></div>
-                </div>
+                        <div id="Logo"><img src="./img/jslogo.png" alt=""></div><div id="Title"></div>
+                    </div>
                     <div id="LevelWrapper" class="scoreboardBlock">
                         <div class="scoreboardLabel">Level </div>
                         <div id="Level" class="scoreboardStat"></div>
@@ -63,8 +63,8 @@
                         <div class="scoreboardLabel">New Game</div>
                     </div>
                 </div>
-            </div><!--
-            --><div id="LinkButtons">
+            </div>
+            <div id="LinkButtons">
                 <a id="blue" class="buttons" href="http://youtube.com/c/littlezoejaye">
                     the chan
                 </a>
@@ -125,7 +125,8 @@
 
             function eventGameStart() {
                 newGameButton.style.display = "none";
-                randomizeTitle();
+                //randomizeTitle();
+                gradientTitle();
             }
 
             function eventGameEnd() {
@@ -133,7 +134,7 @@
             }
 
             function randomizeTitle() {
-                var title = "JS TETRIS";
+                var title = "TETRIS";
                 var chars = title.split('');
                 var eTitle = document.getElementById("Title");
 
@@ -145,6 +146,13 @@
                     e.innerHTML = char;
                     eTitle.appendChild(e);
                 });
+            }
+
+            function gradientTitle() {
+                var eTitle = document.getElementById("Title");
+
+                eTitle.innerHTML = "TETRIS";
+                eTitle.classList.add("gradientText");
             }
         </script>
     </body>
