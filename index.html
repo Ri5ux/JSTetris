@@ -27,7 +27,7 @@
                 <canvas id="Tetris" width="401px" height="801px"></canvas><!--
                 --><div id="Scoreboard">
                     <div id="TitleWrapper" class="scoreboardBlock">
-                    <div id="Title">JS TETRIS</div>
+                    <div id="Title"></div>
                 </div>
                     <div id="LevelWrapper" class="scoreboardBlock">
                         <div class="scoreboardLabel">Level </div>
@@ -58,6 +58,10 @@
                         <div class="scoreboardLabel">Tetris</div>
                         <div id="TetrisCount" class="scoreboardStat"></div>
                     </div>
+                    <hr/>
+                    <div id="NewGame" class="scoreboardBlock scoreboardButton" onclick="newGame();">
+                        <div class="scoreboardLabel">New Game</div>
+                    </div>
                 </div>
             </div><!--
             --><div id="LinkButtons">
@@ -77,8 +81,8 @@
         </div>
         <script type="text/javascript">
             var tetris = new Game("Tetris");
-            tetris.start();
 
+            var newGameButton = document.getElementById("NewGame");
             var level = document.getElementById("Level");
             var score = document.getElementById("Score");
             var lines = document.getElementById("Lines");
@@ -86,6 +90,8 @@
             var doubleCount = document.getElementById("DoubleCount");
             var tripleCount = document.getElementById("TripleCount");
             var tetrisCount = document.getElementById("TetrisCount");
+
+            newGame();
 
             setInterval(function() {
                 if (parseInt(level.innerHTML) != tetris.level) {
@@ -110,6 +116,36 @@
                     tetrisCount.innerHTML = tetris.stats.tetris;
                 }
             }, 20);
+
+            function newGame() {
+                tetris.setGameEndEvent(eventGameEnd);
+                tetris.setGameStartEvent(eventGameStart);
+                tetris.start();
+            }
+
+            function eventGameStart() {
+                newGameButton.style.display = "none";
+                randomizeTitle();
+            }
+
+            function eventGameEnd() {
+                newGameButton.style.display = "block";
+            }
+
+            function randomizeTitle() {
+                var title = "JS TETRIS";
+                var chars = title.split('');
+                var eTitle = document.getElementById("Title");
+
+                eTitle.innerHTML = "";
+                chars.forEach(function(char) {
+                    var e = document.createElement('div');
+                    e.style.color = randomHexColor();
+                    e.style.display = "inline";
+                    e.innerHTML = char;
+                    eTitle.appendChild(e);
+                });
+            }
         </script>
     </body>
 </html>

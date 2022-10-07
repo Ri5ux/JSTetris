@@ -99,14 +99,14 @@ body
     background: #000000;
     color: #FFFFFF;
     font-family: digital, system-ui;
-    font-size: 22px;
+    font-size: 16px;
     width: 400px;
 }
 .scoreboardBlock {
     width: 100%;
     margin: 1px 0px;
     background: rgba(255, 255, 255, 0.05);
-    color: #AAAAAA;;
+    color: #FFFFFF;
 }
 .scoreboardLabel,
 .scoreboardStat {
@@ -115,9 +115,18 @@ body
 .scoreboardLabel {
     width: fit-content;
     display: inline-block;
+    color: rgba(255, 255, 255, 0.3);
+    height: 20px;
 }
 .scoreboardStat {
     float: right;
+}
+.scoreboardButton:hover {
+    background: #00AAFF;
+    cursor: pointer;
+}
+.scoreboardButton:hover .scoreboardLabel {
+    color: #000000 !important;
 }
 #Title {
     text-align: center;
@@ -128,4 +137,7 @@ body
 }
 hr {
     border: 1px solid rgba(255, 255, 255, 0.1);
+}
+#NewGame {
+    display: none;
 }

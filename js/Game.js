@@ -7,6 +7,10 @@ class Game {
         this.render = new Draw(this, this.canvas, this.context);
         this.sounds = new Sounds(this);
         this.stats = new Statistics(this);
+    }
+
+    init() {
+        this.canvas.style.background = GameConstants.game.background;
         this.ticks = 1;
         this.partialTicks = 1;
         this.pxInMM = 1;
@@ -22,14 +26,15 @@ class Game {
         this.activeShape = null;
         this.dpi = window.devicePixelRatio;
         this.adjustDPI();
-        this.init();
-    }
-
-    init() {
-        this.canvas.style.background = GameConstants.game.background;
     }
 
     start() {
+        this.init();
+        this.sounds.FX_START.play();
+
+        if (this.eventGameStart != null) {
+            this.eventGameStart();
+        }
         var game = this;
 
         setInterval(function () {
@@ -220,6 +225,10 @@ class Game {
         this.gameOver = true;
         this.sounds.FX_END_LEVEL.play();
         this.lineToClear = 0;
+
+        if (this.eventGameEnd != null) {
+            this.eventGameEnd();
+        }
     }
 
     getCubesAtLevel(level) {
@@ -254,5 +263,13 @@ class Game {
             });
             this.lineToClear++;
         }
+    }
+
+    setGameStartEvent(func) {
+        this.eventGameStart = func;
+    }
+
+    setGameEndEvent(func) {
+        this.eventGameEnd = func;
     }
 }
