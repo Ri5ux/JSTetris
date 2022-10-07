@@ -91,7 +91,7 @@ class Game {
     }
 
     createNewShape() {
-        let type = SHAPES[randomInteger(SHAPES.length - 1)];
+        let type = SHAPES[randomInteger(SHAPES.length)];
         this.addShape(type.create(this));
     }
 
