@@ -108,12 +108,19 @@ class Draw {
         let y2 = y1 + (padding / 2);
         let w2 = w1 - padding;
         let h2 = h1 - padding;
+        let x3 = x1 + 1;
+        let y3 = y1 + 1;
+        let x4 = x3 + w3;
+        let y4 = y3 + h3;
         
         this.ctx.fillStyle = color;
         this.ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
         this.ctx.lineWidth = padding;
         this.drawRoundedRect(x1, y1, w1, h1, radius * 2, true, false);
-        this.drawRoundedRect(x2, y2, w2, h2, radius, false, true);
+        this.ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
+        this.drawRoundedRect(x3, y3, fxSize, fxSize, radius, true, false);
+        this.ctx.fillStyle = "rgba(0, 0, 0, 0.6)";
+        this.drawRoundedRect(x4, y4, fxSize, fxSize, radius, true, false);
     }
 
     drawCollisionDebug(x, y) {
