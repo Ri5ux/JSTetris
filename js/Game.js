@@ -141,8 +141,12 @@ class Game {
         var game = this;
 
         this.shapes.forEach(function(shape) {
-            if (shape.isAbove(y) && shape != game.activeShape) {
-                shape.setPos(shape.getX(), shape.getY() + 1);
+            if (shape != game.activeShape) {
+                shape.cubes.forEach(function(cube) {
+                    if (cube.getY() < y) {
+                        cube.setPos(cube.getOffsetX(), cube.getOffsetY() + 1);
+                    }
+                }); 
             }
         });
     }
