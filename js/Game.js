@@ -5,14 +5,13 @@ class Game {
         this.context = this.canvas.getContext('2d');
         this.input = new InputHandler(this.canvas, this);
         this.render = new Draw(this, this.canvas, this.context);
+        this.stats = new Statistics();
         this.ticks = 1;
         this.partialTicks = 1;
         this.pxInMM = 1;
         this.cubeSize = 40;
         this.levelSpeed = 0.1; /* Range between 0.1 and 0.95 - Do not exceed 0.95 */
         this.level = 0;
-        this.score = 0;
-        this.lines = 0;
         this.softDrop = 0;
         this.pause = false;
         this.shapes = [];
@@ -196,35 +195,6 @@ class Game {
             game.shiftAllDownAbove(y);
         });
 
-        this.addScoreLineCompletion(completeLines.length);
-    }
-
-    addScore(points) {
-        this.score = this.score + points;
-    }
-
-    addLines(lines) {
-        this.lines = this.lines + lines;
-    }
-
-    addScoreLineCompletion(count) {
-        switch(count) {
-            case 1:
-                this.addLines(1);
-                this.addScore(40 * (this.level + 1));
-                break;
-            case 2:
-                this.addLines(2);
-                this.addScore(100 * (this.level + 1));
-                break;
-            case 3:
-                this.addLines(3);
-                this.addScore(300 * (this.level + 1));
-                break;
-            case 4:
-                this.addLines(4);
-                this.addScore(1200 * (this.level + 1));
-                break;
-        }
+        this.stats.addScoreLineCompletion(completeLines.length);
     }
 }

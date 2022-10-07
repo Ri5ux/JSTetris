@@ -65,7 +65,7 @@ class InputHandler {
                         }
                         if (this.game.activeShape == null || this.game.activeShape != null && this.game.activeShape.frozen) {
                             console.log("Soft Drop Points: " + this.game.softDrop);
-                            this.game.addScore(this.game.softDrop);
+                            this.game.stats.addScore(this.game.softDrop);
                             this.game.softDrop = 0;
                         }
                         break;

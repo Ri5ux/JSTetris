@@ -8,6 +8,7 @@
         <script src="./js/Constants.js"></script>
         <script src="./js/MathUtil.js"></script>
         <script src="./js/Draw.js"></script>
+        <script src="./js/Statistics.js"></script>
         <script src="./js/Input.js"></script>
         <script src="./js/Game.js"></script>
         <script src="./js/Shape.js"></script>
@@ -31,13 +32,30 @@
                         <div class="scoreboardLabel">Level </div>
                         <div id="Level" class="scoreboardStat"></div>
                     </div>
-                    <div id="ScoreWrapper" class="scoreboardBlock">
+                    <div class="scoreboardBlock">
                         <div class="scoreboardLabel">Lines</div>
                         <div id="Lines" class="scoreboardStat"></div>
                     </div>
-                    <div id="ScoreWrapper" class="scoreboardBlock">
+                    <div class="scoreboardBlock">
                         <div class="scoreboardLabel">Score</div>
                         <div id="Score" class="scoreboardStat"></div>
+                    </div>
+                    <hr/>
+                    <div class="scoreboardBlock">
+                        <div class="scoreboardLabel">Single</div>
+                        <div id="SingleCount" class="scoreboardStat"></div>
+                    </div>
+                    <div class="scoreboardBlock">
+                        <div class="scoreboardLabel">Double</div>
+                        <div id="DoubleCount" class="scoreboardStat"></div>
+                    </div>
+                    <div class="scoreboardBlock">
+                        <div class="scoreboardLabel">Triple</div>
+                        <div id="TripleCount" class="scoreboardStat"></div>
+                    </div>
+                    <div class="scoreboardBlock">
+                        <div class="scoreboardLabel">Tetris</div>
+                        <div id="TetrisCount" class="scoreboardStat"></div>
                     </div>
                 </div>
             </div><!--
@@ -63,16 +81,32 @@
             var level = document.getElementById("Level");
             var score = document.getElementById("Score");
             var lines = document.getElementById("Lines");
+            var singleCount = document.getElementById("SingleCount");
+            var doubleCount = document.getElementById("DoubleCount");
+            var tripleCount = document.getElementById("TripleCount");
+            var tetrisCount = document.getElementById("TetrisCount");
 
             setInterval(function() {
                 if (parseInt(level.innerHTML) != tetris.level) {
                     level.innerHTML = tetris.level;
                 }
-                if (parseInt(score.innerHTML) != tetris.score) {
-                    score.innerHTML = tetris.score;
+                if (parseInt(score.innerHTML) != tetris.stats.score) {
+                    score.innerHTML = tetris.stats.score;
                 }
-                if (parseInt(lines.innerHTML) != tetris.lines) {
-                    lines.innerHTML = tetris.lines;
+                if (parseInt(lines.innerHTML) != tetris.stats.lines) {
+                    lines.innerHTML = tetris.stats.lines;
+                }
+                if (parseInt(singleCount.innerHTML) != tetris.stats.singles) {
+                    singleCount.innerHTML = tetris.stats.singles;
+                }
+                if (parseInt(doubleCount.innerHTML) != tetris.stats.doubles) {
+                    doubleCount.innerHTML = tetris.stats.doubles;
+                }
+                if (parseInt(tripleCount.innerHTML) != tetris.stats.triples) {
+                    tripleCount.innerHTML = tetris.stats.triples;
+                }
+                if (parseInt(tetrisCount.innerHTML) != tetris.stats.tetris) {
+                    tetrisCount.innerHTML = tetris.stats.tetris;
                 }
             }, 20);
         </script>
