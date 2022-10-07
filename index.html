@@ -19,38 +19,55 @@
         <h2>JS TETRIS: THE TRASHIEST TETRIS IN THE WORLD!</h2>
         <div class="words"> Have you ever wanted to play a really awkward Tetris spinoff, coded by two sarcastic people who like food and never sleep? Here you go!</p>
         <div class="boredom"> Brought to you by weeks of sleep deprivation & the alphabet mafia</div>
-        <a href="http://youtube.com/c/littlezoejaye">
-            <button class="buttons" id="blue">
-                the chan
-            </button>
-        </a>
-        <a href="https://www.youtube.com/channel/UCKPmXdnQEnkE4lC5Beh_aTw">
-            <button class="buttons" id="green">
-                the other man's chan
-            </button>
-        </a>
-        <a href="https://soundcloud.com/user-515025676">
-            <button class="buttons" id="plurbe">
-                tetris bros music
-            </button>
-        </a>
-        <a href="https://thectwc.com/">
-            <button class="buttons" id="bootycheek">
-                neat stuff
-            </button>
-        </a>
 
-        <div id="ScoreWrapper"><div id="Lines"></div><div id="Score"></div></div>
-
-        <canvas id="Tetris" width="401px" height="801px"></canvas>
+        <div id="ContentContainer">
+            <div id="GameWrapper">
+                <canvas id="Tetris" width="401px" height="801px"></canvas><!--
+                --><div id="Scoreboard">
+                    <div id="TitleWrapper" class="scoreboardBlock">
+                    <div id="Title">JS TETRIS</div>
+                </div>
+                    <div id="LevelWrapper" class="scoreboardBlock">
+                        <div class="scoreboardLabel">Level </div>
+                        <div id="Level" class="scoreboardStat"></div>
+                    </div>
+                    <div id="ScoreWrapper" class="scoreboardBlock">
+                        <div class="scoreboardLabel">Lines</div>
+                        <div id="Lines" class="scoreboardStat"></div>
+                    </div>
+                    <div id="ScoreWrapper" class="scoreboardBlock">
+                        <div class="scoreboardLabel">Score</div>
+                        <div id="Score" class="scoreboardStat"></div>
+                    </div>
+                </div>
+            </div><!--
+            --><div id="LinkButtons">
+                <a id="blue" class="buttons" href="http://youtube.com/c/littlezoejaye">
+                    the chan
+                </a>
+                <a id="green" class="buttons" href="https://www.youtube.com/channel/UCKPmXdnQEnkE4lC5Beh_aTw">
+                    the other man's chan
+                </a>
+                <a id="plurbe" class="buttons" href="https://soundcloud.com/user-515025676">
+                    tetris bros music
+                </a>
+                <a id="bootycheek" class="buttons" href="https://thectwc.com/">
+                    neat stuff
+                </a>
+            </div>
+        </div>
         <script type="text/javascript">
             var tetris = new Game("Tetris");
             tetris.start();
 
+            var level = document.getElementById("Level");
             var score = document.getElementById("Score");
             var lines = document.getElementById("Lines");
 
             setInterval(function() {
+                if (parseInt(level.innerHTML) != tetris.level) {
+                    level.innerHTML = tetris.level;
+                }
                 if (parseInt(score.innerHTML) != tetris.score) {
                     score.innerHTML = tetris.score;
                 }

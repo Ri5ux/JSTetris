@@ -21,6 +21,8 @@ h2
 body 
 {
     background-color:darkslategray;
+    margin: 0px;
+    display: flex;
 }
 .words 
 {
@@ -42,6 +44,9 @@ body
     position:absolute;
 
 }
+#LinkButtons {
+    display: inline-block;
+}
 .buttons
 {
     font-family:monospace;
@@ -50,9 +55,7 @@ body
     font-size:20px;
     text-decoration:none;
     border:none;
-    display:inline-block;
-    position:absolute;
-    left:810px;
+    display:block;
 }
 #blue 
 {
@@ -79,21 +82,47 @@ body
     top:328px;
 }
 
-#ScoreWrapper {
-    background: #000000;
-    font-family: digital, system-ui;
-    font-size: 28px;
-    width: 401px;
+#ContentContainer {
+    display: flex;
 }
-#Score {
-    padding: 10px 20px;
+#GameWrapper {
+    display: flex;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+#GameWrapper canvas {
+    display: inline-block;
+}
+#Scoreboard {
+    display: inline-block;
+    background: #000000;
+    color: #FFFFFF;
+    font-family: digital, system-ui;
+    font-size: 22px;
+    width: 400px;
+}
+.scoreboardBlock {
+    width: 100%;
+    margin: 1px 0px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #AAAAAA;;
+}
+.scoreboardLabel,
+.scoreboardStat {
+    margin: 5px 20px 5px 20px;
+}
+.scoreboardLabel {
     width: fit-content;
-    max-width: fit-content;
+    display: inline-block;
+}
+.scoreboardStat {
     float: right;
 }
-#Lines {
-    padding: 10px 20px;
-    width: fit-content;
-    max-width: fit-content;
-    display: inline-block;
+#Title {
+    text-align: center;
+    padding: 20px;
+    background: #000000;
+    color: #FFFFFF;
+    font-size: 32px;
 }

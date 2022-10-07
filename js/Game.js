@@ -10,8 +10,10 @@ class Game {
         this.pxInMM = 1;
         this.cubeSize = 40;
         this.levelSpeed = 0.1; /* Range between 0.1 and 0.95 - Do not exceed 0.95 */
+        this.level = 0;
         this.score = 0;
         this.lines = 0;
+        this.softDrop = 0;
         this.pause = false;
         this.shapes = [];
         this.debugCollisions = false;
@@ -209,19 +211,19 @@ class Game {
         switch(count) {
             case 1:
                 this.addLines(1);
-                this.addScore(40);
+                this.addScore(40 * (this.level + 1));
                 break;
             case 2:
                 this.addLines(2);
-                this.addScore(100);
+                this.addScore(100 * (this.level + 1));
                 break;
             case 3:
                 this.addLines(3);
-                this.addScore(300);
+                this.addScore(300 * (this.level + 1));
                 break;
             case 4:
                 this.addLines(4);
-                this.addScore(1200);
+                this.addScore(1200 * (this.level + 1));
                 break;
         }
     }

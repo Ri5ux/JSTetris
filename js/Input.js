@@ -13,6 +13,20 @@ class InputHandler {
         canvas.addEventListener('mouseup', this.onMouseUp.bind(this), false);
         canvas.addEventListener('touchend', this.onMouseUp.bind(this), false);
 
+        document.addEventListener('keyup', (event) => {
+            var name = event.key;
+            var code = event.code;
+
+            if (!this.game.pause) {
+                switch (code) {
+                    case 'ArrowDown':
+                        event.preventDefault();
+                        this.game.softDrop = 0;
+                        break;
+                }
+            }
+        }, false);
+
         document.addEventListener('keydown', (event) => {
             var name = event.key;
             var code = event.code;
@@ -47,6 +61,12 @@ class InputHandler {
                         event.preventDefault();
                         if (this.game.activeShape != null) {
                             this.game.activeShape.moveDown();
+                            this.game.softDrop++;
+                        }
+                        if (this.game.activeShape == null || this.game.activeShape != null && this.game.activeShape.frozen) {
+                            console.log("Soft Drop Points: " + this.game.softDrop);
+                            this.game.addScore(this.game.softDrop);
+                            this.game.softDrop = 0;
                         }
                         break;
                 }
