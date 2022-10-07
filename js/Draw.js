@@ -100,6 +100,7 @@ class Draw {
     drawCube(x, y, w, h, color) {
         let padding = 1;
         let radius = 0;
+        let fxSize = this.game.cubeSize / 2;
         let x1 = x * this.game.cubeSize + 1;
         let y1 = y * this.game.cubeSize + 1;
         let w1 = w * this.game.cubeSize - 1;
@@ -110,8 +111,8 @@ class Draw {
         let h2 = h1 - padding;
         let x3 = x1 + 1;
         let y3 = y1 + 1;
-        let x4 = x3 + w3;
-        let y4 = y3 + h3;
+        let x4 = x3 + fxSize;
+        let y4 = y3 + fxSize;
         
         this.ctx.fillStyle = color;
         this.ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
