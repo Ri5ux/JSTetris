@@ -5,7 +5,7 @@ class Game {
         this.context = this.canvas.getContext('2d');
         this.input = new InputHandler(this.canvas, this);
         this.render = new Draw(this, this.canvas, this.context);
-        this.stats = new Statistics();
+        this.stats = new Statistics(this);
         this.ticks = 1;
         this.partialTicks = 1;
         this.pxInMM = 1;
