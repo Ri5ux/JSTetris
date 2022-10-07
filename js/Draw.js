@@ -62,11 +62,9 @@ class Draw {
             this.ctx.lineTo(x1, y1);
             this.ctx.stroke();
 
-            if (i != 0) {
-                let xf = x + (this.game.cubeSize / 4);
-                let yf = y + (this.game.cubeSize / 2) + 3;
-                this.drawString(GameConstants.game.font, GameConstants.game.fontcolor, xf, yf, i / this.game.cubeSize);
-            }
+            let xf = x + (this.game.cubeSize / 4);
+            let yf = y + (this.game.cubeSize / 2) + 3;
+            this.drawString(GameConstants.game.font, GameConstants.game.fontcolor, xf, yf, i / this.game.cubeSize);
 
             idx++
         };
@@ -89,9 +87,10 @@ class Draw {
 
             let xf = x + (this.game.cubeSize / 4);
             let yf = y + (this.game.cubeSize / 2);
-            this.drawCube(0, i / this.game.cubeSize, 1, 1, GameConstants.game.wallColor);
-            this.drawCube(this.game.getCanvasCubeWidth() - 1, i / this.game.cubeSize, 1, 1, GameConstants.game.wallColor);
-            this.drawString(GameConstants.game.font, GameConstants.game.fontcolor, xf, yf + 3, i / this.game.cubeSize);
+                
+            if (i != 0) {
+                this.drawString(GameConstants.game.font, GameConstants.game.fontcolor, xf, yf + 3, i / this.game.cubeSize);
+            }
 
 
             idx++

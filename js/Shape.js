@@ -31,6 +31,22 @@ class Shape {
         return this.y;
     }
 
+    isAbove(y) {
+        var result = false;
+
+        if (this.getY() < y) {
+            result = true;
+        }
+        
+        this.cubes.forEach(function (cube) {
+            if (cube.getY() < y) {
+                result = true;
+            }
+        });
+
+        return result;
+    }
+
     tryRotate(degrees) {
         let result = true;
 
@@ -58,7 +74,7 @@ class Shape {
         var shape = this;
 
         this.cubes.forEach(function (cube) {
-            shape.game.render.drawCube(1 + cube.getX(), cube.getY(), 1, 1, shape.game.debugCollisions ? "rgba(0, 0, 0, 0)" : shape.color);
+            shape.game.render.drawCube(cube.getX(), cube.getY(), 1, 1, shape.game.debugCollisions ? "rgba(0, 0, 0, 0)" : shape.color);
         });
     }
 

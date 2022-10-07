@@ -48,3 +48,9 @@ function sleep(ms) {
         currentDate = Date.now();
     } while (currentDate - date < ms);
 }
+
+function arrayRemove(array, object) {
+    return array.filter(function(obj) {
+        return obj != object;
+    }); 
+}
