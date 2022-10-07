@@ -12,5 +12,10 @@ var GameConstants = {
         font: '12px digital',
         fontcolor: "rgba(255, 255, 255, 0.2)",
         wallColor: "rgba(255, 255, 255, 0.2)"
+    },
+    pause: {
+        background: "rgba(0, 0, 0, 0.7)",
+        font: '28px digital',
+        fontcolor: 'white'
     }
 };

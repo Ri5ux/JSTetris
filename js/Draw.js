@@ -36,6 +36,12 @@ class Draw {
         this.ctx.fillText(('' + (Math['round'](length)) + ''), x, y);
     }
 
+    drawStringCentered(font, color, x, y, str) {
+        this.ctx.font = font;
+        let bounds = this.ctx.measureText(str);
+        this.drawString(font, color, x - (bounds.width / 2), y, str);
+    }
+
     drawString(font, color, x, y, str) {
         this.ctx.fillStyle = color;
         this.ctx.font = font;
@@ -122,6 +128,13 @@ class Draw {
         this.drawRoundedRect(x3, y3, fxSize, fxSize, 0, true, false);
         this.ctx.fillStyle = "rgba(0, 0, 0, 0.3)";
         this.drawRoundedRect(x4, y4, fxSize, fxSize, 0, true, false);
+    }
+
+    drawPauseScreen() {
+        let bounds = this.canvas.getBoundingClientRect();
+        this.ctx.fillStyle = GameConstants.pause.background;
+        this.drawRoundedRect(0, 0, bounds.width, bounds.height, 0, true, false);
+        this.drawStringCentered(GameConstants.pause.font, GameConstants.pause.fontcolor, bounds.width / 2, bounds.height / 2, "Game Paused");
     }
 
     drawCollisionDebug(x, y) {

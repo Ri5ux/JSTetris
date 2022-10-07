@@ -12,6 +12,7 @@ class Game {
         this.levelSpeed = 0.1; /* Range between 0.1 and 0.95 - Do not exceed 0.95 */
         this.score = 0;
         this.lines = 0;
+        this.pause = false;
         this.shapes = [];
         this.debugCollisions = false;
         this.activeShape = null;
@@ -28,7 +29,10 @@ class Game {
         var game = this;
 
         setInterval(function () {
-            game.update();
+            if (!game.pause) {
+                game.update();
+            }
+            game.renderGame();
         }, 20);
     }
 
@@ -38,8 +42,6 @@ class Game {
         if (this.ticks % Math.round(40 * (1.0 - this.levelSpeed)) == 0) {
             this.updateLevel();
         }
-
-        this.renderGame();
     }
 
     updateLevel() {
@@ -61,6 +63,10 @@ class Game {
             shape.draw();
         });
         this.render.drawGrid();
+
+        if (this.pause) {
+            this.render.drawPauseScreen();
+        }
     }
 
     clearCanvas() {

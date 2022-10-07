@@ -17,34 +17,40 @@ class InputHandler {
             var name = event.key;
             var code = event.code;
 
-            switch (code) {
-                case 'ArrowLeft':
-                    event.preventDefault();
-                    if (this.game.activeShape != null) {
-                        this.game.activeShape.moveLeft();
-                    }
-                    break;
-                case 'ArrowRight':
-                    event.preventDefault();
-                    if (this.game.activeShape != null) {
-                        this.game.activeShape.moveRight();
-                    }
-                    break;
-                case 'ArrowUp':
-                    event.preventDefault();
-                    if (this.game.activeShape != null) {
-                        this.game.activeShape.rotate(90);
-                    }
-                    break;
-                case 'ArrowDown':
-                    event.preventDefault();
-                    if (this.game.activeShape != null) {
-                        this.game.activeShape.moveDown();
-                    }
-                    break;
+            if (code == "Space") {
+                event.preventDefault();
+                this.game.pause = !this.game.pause;
+                console.log(this.game.pause ? "Game paused" : "Game resumed");
             }
 
-            console.log(code);
+            if (!this.game.pause) {
+                switch (code) {
+                    case 'ArrowLeft':
+                        event.preventDefault();
+                        if (this.game.activeShape != null) {
+                            this.game.activeShape.moveLeft();
+                        }
+                        break;
+                    case 'ArrowRight':
+                        event.preventDefault();
+                        if (this.game.activeShape != null) {
+                            this.game.activeShape.moveRight();
+                        }
+                        break;
+                    case 'ArrowUp':
+                        event.preventDefault();
+                        if (this.game.activeShape != null) {
+                            this.game.activeShape.rotate(90);
+                        }
+                        break;
+                    case 'ArrowDown':
+                        event.preventDefault();
+                        if (this.game.activeShape != null) {
+                            this.game.activeShape.moveDown();
+                        }
+                        break;
+                }
+            }
         }, false);
     }
     onMouseMove(event) {
