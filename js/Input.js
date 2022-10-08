@@ -33,7 +33,7 @@ class InputHandler {
 
             if (code == "Space") {
                 event.preventDefault();
-                this.game.pause = !this.game.pause;
+                this.game.pauseGame();
                 console.log(this.game.pause ? "Game paused" : "Game resumed");
             }
 

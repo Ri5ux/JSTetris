@@ -66,6 +66,9 @@
                     <div id="NewGame" class="scoreboardBlock scoreboardButton" onclick="newGame();">
                         <div class="scoreboardLabel">New Game</div>
                     </div>
+                    <div class="scoreboardBlock scoreboardButton" onclick="muteMusic();">
+                        <div id="MuteMusic" class="scoreboardLabel">Mute Music</div>
+                    </div>
                 </div>
             </div>
             <div id="LinkButtons">
@@ -87,6 +90,7 @@
             var tetris = new Game("Tetris");
 
             var newGameButton = document.getElementById("NewGame");
+            var muteMusicButton = document.getElementById("MuteMusic");
             var level = document.getElementById("Level");
             var score = document.getElementById("Score");
             var lines = document.getElementById("Lines");
@@ -161,6 +165,16 @@
 
                 eTitle.innerHTML = "TETRIS";
                 eTitle.classList.add("gradientText");
+            }
+
+            function muteMusic() {
+                if (tetris.music.muted) {
+                    muteMusicButton.innerHTML = "Music Off";
+                    tetris.music.muted = false;
+                } else {
+                    muteMusicButton.innerHTML = "Music On";
+                    tetris.music.muted = true;
+                }
             }
         </script>
     </body>

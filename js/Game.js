@@ -27,6 +27,7 @@ class Game {
         this.activeShape = null;
         this.dpi = window.devicePixelRatio;
         this.adjustDPI();
+        this.setMusic(this.sounds.MUSIC1);
     }
 
     start() {
@@ -48,6 +49,7 @@ class Game {
 
     update() {
         this.ticks++;
+        this.music.play();
 
         if (this.ticks % Math.round(40 * (1.0 - this.levelSpeed)) == 0) {
             this.updateLevel();
@@ -87,6 +89,22 @@ class Game {
         }
 
         return false;
+    }
+
+    setMusic(audio) {
+        audio.loop = true;
+        audio.volume = 0.3;
+        this.music = audio;
+    }
+
+    pauseGame() {
+        this.pause = !this.pause;
+
+        if (this.pause) {
+            this.music.pause();
+        } else {
+            this.music.play();
+        }
     }
 
     nextLevel() {
