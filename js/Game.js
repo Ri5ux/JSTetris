@@ -15,7 +15,8 @@ class Game {
         this.partialTicks = 1;
         this.pxInMM = 1;
         this.cubeSize = 40;
-        this.levelSpeed = 0.1; /* Range between 0.1 and 0.95 - Do not exceed 0.95 */
+        this.levelMultiplier = 0.1;
+        this.levelSpeed = 0.05; /* Range between 0.1 and 0.95 - Do not exceed 0.95 */
         this.level = 0;
         this.softDrop = 0;
         this.pause = false;
@@ -59,6 +60,10 @@ class Game {
 
     updateLevel() {
         if (!this.gameOver) {
+            if (this.checkIncreaseLevel()) {
+                this.nextLevel();
+            }
+
             if (this.activeShape == null) {
                 if (!this.isShapeAt(this.getCanvasCenterH(), 0)) {
                     this.createNewShape();
@@ -72,6 +77,23 @@ class Game {
                 this.activeShape.moveDown();
             }
         }
+    }
+
+    checkIncreaseLevel() {
+        if (this.stats.linesThisLevel > 0) {
+            if (this.stats.linesThisLevel % 10 == 0 || this.stats.lines > this.level * 10) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    nextLevel() {
+        this.level++;
+        this.stats.linesThisLevel = this.stats.linesThisLevel % 10;
+        this.sounds.FX_NEXT_LEVEL.play();
+        this.levelSpeed = this.levelMultiplier * this.level;
     }
 
     renderGame() {

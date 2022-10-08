@@ -164,3 +164,6 @@ hr {
     -moz-background-clip: text;
     -moz-text-fill-color: transparent;
 }
+.hidden {
+    display: none;
+}

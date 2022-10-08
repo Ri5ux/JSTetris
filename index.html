@@ -37,6 +37,10 @@
                         <div class="scoreboardLabel">Lines</div>
                         <div id="Lines" class="scoreboardStat"></div>
                     </div>
+                    <div class="scoreboardBlock hidden">
+                        <div class="scoreboardLabel">Lines (This Level)</div>
+                        <div id="LinesLevel" class="scoreboardStat"></div>
+                    </div>
                     <div class="scoreboardBlock">
                         <div class="scoreboardLabel">Score</div>
                         <div id="Score" class="scoreboardStat"></div>
@@ -86,6 +90,7 @@
             var level = document.getElementById("Level");
             var score = document.getElementById("Score");
             var lines = document.getElementById("Lines");
+            var linesLevel = document.getElementById("LinesLevel");
             var singleCount = document.getElementById("SingleCount");
             var doubleCount = document.getElementById("DoubleCount");
             var tripleCount = document.getElementById("TripleCount");
@@ -102,6 +107,9 @@
                 }
                 if (parseInt(lines.innerHTML) != tetris.stats.lines) {
                     lines.innerHTML = tetris.stats.lines;
+                }
+                if (parseInt(linesLevel.innerHTML) != tetris.stats.linesThisLevel) {
+                    linesLevel.innerHTML = tetris.stats.linesThisLevel;
                 }
                 if (parseInt(singleCount.innerHTML) != tetris.stats.singles) {
                     singleCount.innerHTML = tetris.stats.singles;

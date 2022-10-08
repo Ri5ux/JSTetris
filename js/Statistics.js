@@ -3,6 +3,7 @@ class Statistics {
         this.game = game;
         this.score = 0;
         this.lines = 0;
+        this.linesThisLevel = 0;
         this.singles = 0;
         this.doubles = 0;
         this.triples = 0;
@@ -15,6 +16,7 @@ class Statistics {
 
     addLines(lines) {
         this.lines = this.lines + lines;
+        this.linesThisLevel = this.linesThisLevel + lines;
     }
 
     addScoreLineCompletion(count) {
