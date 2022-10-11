@@ -23,6 +23,7 @@ class Game {
         this.gameOver = false;
         this.lineToClear = 0;
         this.shapes = [];
+        this.particles = [];
         this.debugCollisions = false;
         this.activeShape = null;
         this.dpi = window.devicePixelRatio;
@@ -252,6 +253,7 @@ class Game {
                         if (cube.getY() == y) {
                             shape.cubes = arrayRemove(shape.cubes, cube);
                         }
+                        //game.render.createFXExplosion(cube.getX(), cube.getY());
                     });
                 }
             }

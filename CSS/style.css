@@ -3,26 +3,30 @@ h1
     color:rgb(0, 255, 123); 
     font-size:100; 
     font-family:monospace;
-    top:10px;
     left:200;
-    position:absolute;
-
+    margin-bottom: 0px;
 }
 h2 
 {
     color:aquamarine; 
     font-family:monospace; 
     font-size:50;
-    top:50px;
     left:200;
-    position:absolute;
-
+    margin-top: 5px;
+}
+html {
+    background: #111111;
 }
 body 
 {
-    background-color:darkslategray;
     margin: 0px;
-    display: flex;
+    margin: 0px auto;
+    width: 1000px;
+}
+#HeadContainer {
+    padding: 10px;
+    margin-bottom: 20px;
+    padding: 10px 20px;
 }
 .words 
 {
@@ -31,18 +35,13 @@ body
     left:300;
     top:100px;
     font-family:monospace;
-    position:absolute;
-
 }
 .boredom
 {
     font-size:10px;
     font-family:monospace;
     color:black;
-    top:1000px;
-    left:0;
-    position:absolute;
-
+    padding: 10px;
 }
 #LinkButtons {
     display: inline-block;
@@ -56,32 +55,30 @@ body
     text-decoration:none;
     border:none;
     display:block;
+    margin: 0px 10px 10px 10px;
+    padding: 20px;
 }
 #blue 
 {
     background-color:rgb(73, 133, 133);
-    padding: 20px 92px;
-    top:28px;
 }
 #green 
 {
     background-color:rgb(97, 177, 124);
-    top:128px;
-    padding:20px 20px;
 }
 #plurbe
 {
     background-color:rgb(73, 133, 133);
-    padding:20px 38px;
-    top:228px;
 }
 #bootycheek
 {
     background-color:rgb(97, 177, 124);
-    padding:20px 80px;
-    top:328px;
 }
 
+#Content {
+    background-color:#000000;
+    padding: 0px;
+}
 #ContentContainer {
     display: flex;
 }

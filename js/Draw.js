@@ -176,4 +176,31 @@ class Draw {
             this.ctx.stroke();
         }
     }
+
+    createFXExplosion(x, y) {
+        for (var i = 0; i <= 100; i++) {
+            let dx = (Math.random() - 0.5) * (Math.random() * 6);
+            let dy = (Math.random() - 0.5) * (Math.random() * 6);
+            let radius = Math.random() * 3;
+            let particle = new Particle(this.game, x, y, radius, dx, dy);
+
+            this.game.particles.push(particle);
+        }
+        this.fxExplode();
+    }
+
+    fxExplode() {
+        let particles = this.game.particles;
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.fillStyle = "white";
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+        particles.forEach((particle, i) => {
+            if (particle.alpha <= 0) {
+                particles.splice(i, 1);
+            } else particle.update();
+        });
+
+        //requestAnimationFrame(this.fxExplode);
+    }
 }
