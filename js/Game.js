@@ -50,7 +50,10 @@ class Game {
 
     update() {
         this.ticks++;
-        this.music.play();
+
+        if (!this.gameOver) {
+            this.music.play();
+        }
 
         if (this.ticks % Math.round(40 * (1.0 - this.levelSpeed)) == 0) {
             this.updateLevel();
@@ -265,6 +268,8 @@ class Game {
 
     gameEnd() {
         this.gameOver = true;
+        this.music.currentTime = 0;
+        this.music.pause();
         this.sounds.FX_END_LEVEL.play();
         this.lineToClear = 0;
 
