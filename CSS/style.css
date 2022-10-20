@@ -1,18 +1,27 @@
 h1 
 {
-    color:rgb(0, 255, 123); 
+    grid-area: header;
+    color:rgb(108, 189, 147);
+    background-color:rgb(4, 97, 121); 
     font-size:100; 
     font-family:monospace;
     left:200;
-    margin-bottom: 0px;
+    margin-top: -10px;
+    padding: 40px;
+    text-align: center;
 }
 h2 
 {
-    color:aquamarine; 
+    grid-area: subhead;
+    color:rgb(131, 196, 174);
+    background-color:rgb(90, 136, 148); 
     font-family:monospace; 
     font-size:50;
     left:200;
-    margin-top: 5px;
+    text-align: center;
+    margin-top: -20px;
+    margin-bottom: 0px;
+    padding: 25px;
 }
 html {
     background: #111111;
@@ -21,30 +30,13 @@ body
 {
     margin: 0px;
     margin: 0px auto;
-    width: 1000px;
-}
-#HeadContainer {
-    padding: 10px;
-    margin-bottom: 20px;
-    padding: 10px 20px;
-}
-.words 
-{
-    color:darkgrey; 
-    font-size:36;
-    left:300;
-    top:100px;
-    font-family:monospace;
-}
-.boredom
-{
-    font-size:10px;
-    font-family:monospace;
-    color:black;
-    padding: 10px;
+    width: 100%;
 }
 #LinkButtons {
+    grid-area: nav;
     display: inline-block;
+    background-color:rgb(63, 125, 141); 
+    width: 200px;
 }
 .buttons
 {
@@ -52,10 +44,11 @@ body
     text-align:center;
     color:rgb(18, 86, 86);
     font-size:20px;
+    width: 120px;
     text-decoration:none;
     border:none;
     display:block;
-    margin: 0px 10px 10px 10px;
+    margin: 20px;
     padding: 20px;
 }
 #blue 
@@ -80,9 +73,16 @@ body
     padding: 0px;
 }
 #ContentContainer {
-    display: flex;
+    display: grid;
+    grid-template-areas:
+    "header header header"
+    "subhead subhead subhead"
+    "nav canvas canvas"
+    "nav canvas canvas"
+    ;
 }
 #GameWrapper {
+    grid-area: canvas;
     display: flex;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
