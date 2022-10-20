@@ -7,7 +7,7 @@ h1
     font-family:monospace;
     left:200;
     margin-top: -10px;
-    padding: 40px;
+    padding: 30px 40px 10px 40px;
     text-align: center;
 }
 h2 
@@ -16,12 +16,12 @@ h2
     color:rgb(131, 196, 174);
     background-color:rgb(90, 136, 148); 
     font-family:monospace; 
-    font-size:50;
+    font-size: 15px;
     left:200;
     text-align: center;
     margin-top: -20px;
     margin-bottom: 0px;
-    padding: 25px;
+    padding: 10px;
 }
 html {
     background: #111111;
