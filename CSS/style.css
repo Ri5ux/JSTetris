@@ -1,0 +1,166 @@
+h1 
+{
+    color:rgb(0, 255, 123); 
+    font-size:100; 
+    font-family:monospace;
+    left:200;
+    margin-bottom: 0px;
+}
+h2 
+{
+    color:aquamarine; 
+    font-family:monospace; 
+    font-size:50;
+    left:200;
+    margin-top: 5px;
+}
+html {
+    background: #111111;
+}
+body 
+{
+    margin: 0px;
+    margin: 0px auto;
+    width: 1000px;
+}
+#HeadContainer {
+    padding: 10px;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+}
+.words 
+{
+    color:darkgrey; 
+    font-size:36;
+    left:300;
+    top:100px;
+    font-family:monospace;
+}
+.boredom
+{
+    font-size:10px;
+    font-family:monospace;
+    color:black;
+    padding: 10px;
+}
+#LinkButtons {
+    display: inline-block;
+}
+.buttons
+{
+    font-family:monospace;
+    text-align:center;
+    color:rgb(18, 86, 86);
+    font-size:20px;
+    text-decoration:none;
+    border:none;
+    display:block;
+    margin: 0px 10px 10px 10px;
+    padding: 20px;
+}
+#blue 
+{
+    background-color:rgb(73, 133, 133);
+}
+#green 
+{
+    background-color:rgb(97, 177, 124);
+}
+#plurbe
+{
+    background-color:rgb(73, 133, 133);
+}
+#bootycheek
+{
+    background-color:rgb(97, 177, 124);
+}
+
+#Content {
+    background-color:#000000;
+    padding: 0px;
+}
+#ContentContainer {
+    display: flex;
+}
+#GameWrapper {
+    display: flex;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+#GameWrapper canvas {
+    display: inline-block;
+}
+#Scoreboard {
+    display: inline-block;
+    background: #000000;
+    color: #FFFFFF;
+    font-family: digital, system-ui;
+    font-size: 16px;
+    width: 400px;
+}
+.scoreboardBlock {
+    margin: 3px 10px;
+    color: #FFFFFF;
+}
+.scoreboardLabel,
+.scoreboardStat {
+    margin: 5px 20px 5px 20px;
+}
+.scoreboardLabel {
+    width: fit-content;
+    display: inline-block;
+    color: rgba(255, 255, 255, 0.3);
+    height: 20px;
+}
+.scoreboardStat {
+    float: right;
+}
+.scoreboardButton:hover {
+    background: #00AAFF;
+    cursor: pointer;
+}
+.scoreboardButton:hover .scoreboardLabel {
+    color: #000000 !important;
+}
+#TitleWrapper {
+    text-align: center;
+    padding: 20px;
+    background: #000000;
+    color: #FFFFFF;
+    font-size: 48px;
+}
+#TitleWrapper #Logo {
+    display: inline-block;
+    vertical-align: middle;
+    width: 64px;
+    height: 64px;
+}
+#TitleWrapper #Logo img {
+    max-width: 64px;
+    display: inline-block;
+}
+#Title {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 10px 20px;
+}
+hr {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+#NewGame {
+    display: none;
+}
+
+.gradientText {
+    background-image: linear-gradient(90deg, #00AAFF, #FF0066);
+    background-size: 100%;
+    background-repeat: repeat;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-background-clip: text;
+    -moz-text-fill-color: transparent;
+}
+.hidden {
+    display: none;
+}
